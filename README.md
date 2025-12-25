@@ -1,5 +1,4 @@
-# evangadi-forum-G3
-## Team Task Assignment
+# Team Task Assignment
 
 This task assignment shows how backend and frontend tasks are shared among team members. Each student is responsible for one backend task and one frontend task.
 
@@ -7,7 +6,7 @@ The project uses one shared GitHub repository. All team members must work in the
 
 ### Assignment Table
 
-| No. | Student Name        | Backend Task (# & Title)                  | Frontend Task (# & Title)     |
+| No. | Student Name        | Backend Task (No. & Title)                  | Frontend Task (No. & Title)     |
 |----:|---------------------|-------------------------------------------|-------------------------------|
 | 1   | Abdulkaf Nesru      | 1 – Create MySQL Database & Schema         | 11 – Header Component          |
 | 2   | Abdurehman Kero     | 2 – API Documentation                      | 12 – Footer Component          |
@@ -18,7 +17,7 @@ The project uses one shared GitHub repository. All team members must work in the
 | 7   | Meron Fantahun     | 7 – Post Answer for a Question             | 17 – Home Page                 |
 | 8   | Mikre Tadesse      | 8 – Get All Questions                      | 18 – Question Page             |
 | 9   | Mohammed Ali       | 9 – Get Single Question                    | 19 – Answer Page               |
-| 10  | Rediet Gebremichael| 10 – Post Question                         | 11 – Header Component          |
-| 11  | Simerson Sime      | 1 – Create MySQL Database & Schema         | 12 – Footer Component          |
-| 12  | Temesgen Belete    | 2 – API Documentation                      | 13 – Sign-up Component         |
+| 10  | Rediet Gebremichael| 10 – Post Question                         | 17 – Home Page          |
+| 11  | Simerson Sime      | 1 – Create MySQL Database & Schema         | 18 – Question Page         |
+| 12  | Temesgen Belete    | 2 – API Documentation                      | 13 – 19 – Answer Page          |
 
