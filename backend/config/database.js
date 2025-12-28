@@ -1,8 +1,7 @@
-import express from "express";
+import mysql from "mysql2";
 import dotenv from "dotenv";
 dotenv.config();
-const app = express();
-import mysql from "mysql2";
+
 const database = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -20,7 +19,5 @@ database.getConnection((err) => {
     console.log("Connected to MySQL database.");
   }
 });
-app.listen(4000, () => {
-  console.log(`Server is running on port ${4000}`);
-});
+
 export default database;
