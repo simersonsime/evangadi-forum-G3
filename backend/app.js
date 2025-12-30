@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 // ----------Routes--------------//
 // app.use("/api/user", authRoutes);
 app.use("/api/question", questionRoutes);
-// app.use("/api/answer", answerRoutes);
+app.use("/api/answer", answerRoutes);
 app.use("/api/comments", commentRoutes);
 
 // ----------Default route----------//
