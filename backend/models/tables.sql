@@ -26,5 +26,5 @@ CREATE TABLE IF NOT EXISTS answers(
   question_id INT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
-  FOREIGN KEY (question_id) REFERENCES questionsquestion_id) ON DELETE CASCADE
+  FOREIGN KEY (question_id) REFERENCES (questionsquestion_id) ON DELETE CASCADE
 );
