@@ -4,6 +4,8 @@ import dotenv from "dotenv";
 // import authRoutes from "./routes/authRoutes.js";
 import questionRoutes from "./routes/questionRoutes.js";
 // import answerRoutes from "./routes/answerRoutes.js";
+import commentRoutes from "./routes/commentRoutes.js";
+
 
 dotenv.config();
 const app = express();
@@ -16,6 +18,7 @@ app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 // app.use("/api/user", authRoutes);
 app.use("/api/question", questionRoutes);
 // app.use("/api/answer", answerRoutes);
+app.use("/api/comments", commentRoutes);
 
 // ----------Default route----------//
 app.get("/", (req, res) => {
