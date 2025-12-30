@@ -2,41 +2,34 @@ import db from "../config/database.js";
 
 /**
  * Get all questions
+ * Endpoint: GET /api/question/
  */
+
 export const getAllQuestions = async (req, res) => {
   try {
     // 1. Fetch all questions from the database
-    const [rows] = await db.promise().query("SELECT * FROM questions");
+    const [rows] = await db.promise().query("SELECT * FROM questions BY created_at DESC");
 
-    // 2. Send response
-    res.status(200).json(rows);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
-/** get question by ID */
-export const getQuestionById = async (req, res) => {
-  const { id } = req.params;
-  try {
-    const [row] = await db
-      .promise()
-      .query("SELECT * FROM questions WHERE question_id = ?", [id]);
-
-    if (row.length === 0) {
+    // 2. Check if question exists
+    if (rows.length === 0) {
       return res.status(404).json({
-        message: "Question not found",
+        error: "Not Found",
+        message: "No questions found.",
       });
     }
 
-    res.status(200).json({
-      data: row[0],
-    });
-  } catch (error) {
+    // 2. Send response
+    res.status(200).json({ questions: rows });
+  } catch (err) {
+    console.error("Get all questions error:", err);
     res.status(500).json({
-      message: "Internal Server Error",
+      error: "Internal Server Error",
+      message: "An unexpected error occurred.",
     });
   }
 };
+
+
 
 /**
  * Post a new question
