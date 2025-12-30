@@ -37,3 +37,55 @@ export const getQuestionById = async (req, res) => {
     });
   }
 };
+
+/**
+ * Post a new question
+ * Endpoint: POST /api/question/
+ * Protected route (JWT protected)
+ */
+export const postQuestion = async (req, res) => {
+  let { title, description } = req.body;
+
+  // 1. Extract user ID from JWT
+  const user_id = req.user?.id;
+  if (!user_id) {
+    return res.status(401).json({
+      error: "Unauthorized",
+      message: "Authentication required",
+    });
+  }
+
+  // 2. Trim input
+  title = title?.trim();
+  description = description?.trim();
+
+  // 3. Validate input
+  if (!title || !description) {
+    return res.status(400).json({
+      error: "Bad Request",
+      message: "Please provide all required fields",
+    });
+  }
+
+  try {
+    // 4. Insert question into database
+    const [result] = await db
+      .promise()
+      .query(
+        "INSERT INTO questions (user_id, title, description) VALUES (?, ?, ?)",
+        [user_id, title, description]
+      );
+
+    // 5. Send success response
+    res.status(201).json({
+      message: "Question created successfully",
+      question_id: result.insertId,
+    });
+  } catch (err) {
+    console.error("Post question error:", err);
+    res.status(500).json({
+      error: "Internal Server Error",
+      message: "An unexpected error occurred.",
+    });
+  }
+};
