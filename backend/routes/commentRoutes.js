@@ -1,4 +1,3 @@
-// routes/commentRoutes.js
 import express from "express";
 import {
   postComment,
@@ -13,7 +12,7 @@ const router = express.Router();
  * POST /api/comments
  * Protected route - Add comment to answer
  */
-router.post("/", authMiddleware, postComment);
+router.post("/", postComment);//authMiddleware is removed for testing purpose
 
 /**
  * GET /api/comments/:answerid
