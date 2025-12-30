@@ -26,5 +26,16 @@ CREATE TABLE IF NOT EXISTS answers(
   question_id INT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
-  FOREIGN KEY (question_id) REFERENCES questionsquestion_id) ON DELETE CASCADE
+  FOREIGN KEY (question_id) REFERENCES questions(question_id) ON DELETE CASCADE  -- FIXED: Added parentheses
+);
+
+-- Comments table for answers
+CREATE TABLE IF NOT EXISTS comments(
+  comment_id INT AUTO_INCREMENT PRIMARY KEY,
+  comment_body TEXT NOT NULL,
+  user_id INT NOT NULL,
+  answer_id INT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+  FOREIGN KEY (answer_id) REFERENCES answers(answer_id) ON DELETE CASCADE
 );
