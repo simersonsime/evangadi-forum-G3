@@ -30,14 +30,14 @@ export const getQuestionById = async (req, res) => {
     const [rows] = await db
       .promise()
       .query("SELECT * FROM questions WHERE question_id = ?", [id]);
-
+    // Handle case where the question does not exist
     if (rows.length === 0) {
       return res.status(404).json({
         error: "Not Found",
         message: "Question not found.",
       });
     }
-
+    // Return the fetched question
     res.status(200).json({ question: rows[0] });
   } catch (err) {
     console.error("Get question by ID error:", err);
