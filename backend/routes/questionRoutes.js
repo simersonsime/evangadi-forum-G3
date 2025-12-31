@@ -11,6 +11,7 @@ const router = express.Router();
 // Public routes
 router.get("/", getAllQuestions);
 router.get("/:id", getQuestionById);
+// router.get("/user/:userId", postQuestion);
 
 //  ADD THIS - Protected route
 router.post("/",  postQuestion);
