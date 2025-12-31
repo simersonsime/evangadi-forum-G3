@@ -11,9 +11,8 @@ dotenv.config();
 const app = express();
 
 // -----------Middleware------------//
-app.use(express.json()); // Parse JSON bodies
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
-
+app.use(express.json()); //  MUST BE BEFORE ROUTES
+app.use(express.urlencoded({ extended: true }));
 // ----------Routes--------------//
 // app.use("/api/user", authRoutes);
 app.use("/api/question", questionRoutes);

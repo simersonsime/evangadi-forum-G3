@@ -5,17 +5,18 @@ import {
   deleteComment,
 } from "../models/commentModel.js";
 
-/**
- * POST /api/comments
- * Description: Add a comment to an answer
- */
+ 
 export const postComment = async (req, res) => {
   try {
     // 1. Get data from request body
     const { answerid, comment_body } = req.body;
 
     // 2. Get user id from authMiddleware (JWT)
-    const { userid } = req.user;
+    // const { userid } = req.user;
+const userid = req.body.userid || (req.user ? req.user.userid : null);
+// console.log(" POST /api/comments called");
+// console.log("Request body:", req.body);
+// console.log("Request user:", req.user);
 
     // 3. Validation
     if (!answerid || !comment_body) {

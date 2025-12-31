@@ -1,41 +1,47 @@
 import database from "../config/database.js";
 
-// Create a new comment
-export const createComment = (answerId, userId, commentBody) => {
-  return new Promise((resolve, reject) => {
-    const sql =
-      "INSERT INTO comments (answer_id, user_id, comment_body) VALUES (?, ?, ?)";
-    database.query(sql, [answerId, userId, commentBody], (err, result) => {
-      if (err) reject(err);
-      resolve(result);
-    });
-  });
+export const createComment = async (answerId, userId, commentBody) => {
+  try {
+    const query = `
+      INSERT INTO comments (answer_id, user_id, comment_body)
+      VALUES (?, ?, ?)
+    `;
+
+    const values = [answerId, userId, commentBody];
+
+    const [result] = await database.promise().query(query, values);
+    return result;
+  } catch (error) {
+    console.log("Error creating comment:", error.message);
+    throw error; // Just pass the error up
+  }
 };
 
-// Get all comments for an answer
-export const getCommentsByAnswer = (answerId) => {
-  return new Promise((resolve, reject) => {
-    const sql = `
+export const getCommentsByAnswer = async (answerId) => {
+  try {
+    const query = `
       SELECT c.*, u.user_name, u.first_name, u.last_name 
       FROM comments c
       JOIN users u ON c.user_id = u.user_id
       WHERE c.answer_id = ?
       ORDER BY c.created_at ASC
     `;
-    database.query(sql, [answerId], (err, results) => {
-      if (err) reject(err);
-      resolve(results);
-    });
-  });
+
+    const [results] = await database.promise().query(query, [answerId]);
+    return results;
+  } catch (error) {
+    console.log("Error getting comments:", error.message);
+    throw error;
+  }
 };
 
-// Delete a comment (only by owner)
-export const deleteComment = (commentId, userId) => {
-  return new Promise((resolve, reject) => {
-    const sql = "DELETE FROM comments WHERE comment_id = ? AND user_id = ?";
-    database.query(sql, [commentId, userId], (err, result) => {
-      if (err) reject(err);
-      resolve(result);
-    });
-  });
+export const deleteComment = async (commentId, userId) => {
+  try {
+    const query = "DELETE FROM comments WHERE comment_id = ? AND user_id = ?";
+    const [result] = await database.promise().query(query, [commentId, userId]);
+    return result;
+  } catch (error) {
+    console.log("Error deleting comment:", error.message);
+    throw error;
+  }
 };
