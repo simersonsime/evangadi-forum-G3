@@ -8,6 +8,6 @@ const router = express.Router();
  * POST /api/answer
  * Protected route
  */
-router.post("/", authMiddleware, postAnswer);
+router.post("/:question_id", authenticateToken, postAnswer);
 
 export default router;
