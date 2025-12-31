@@ -1,22 +1,29 @@
-CREATE TABLE IF NOT EXISTS users (
-  user_id INT AUTO_INCREMENT PRIMARY KEY,
-  first_name VARCHAR(50) NOT NULL,
-  last_name VARCHAR(50) NOT NULL,
-  user_name VARCHAR(50) NOT NULL UNIQUE,
-  user_email VARCHAR(254) NOT NULL UNIQUE,
-  password VARCHAR(255) NOT NULL,
-  is_verified TINYINT(1) DEFAULT 0,
-  verification_token VARCHAR(255),
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+--  1. Create Database
+CREATE DATABASE IF NOT EXISTS evangadi_forum;
+USE evangadi_forum;
+
+-- 2. Users Table
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE IF NOT EXISTS questions(
-  question_id INT AUTO_INCREMENT PRIMARY KEY,
-  question_title VARCHAR(255) NOT NULL,
-  question_description TEXT NOT NULL,
-  user_id INT NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+--  3. Questions Table
+CREATE TABLE questions (
+    question_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    title VARCHAR(200) NOT NULL,
+    description TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_question_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(user_id)
+        ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS answers(
@@ -39,3 +46,19 @@ CREATE TABLE IF NOT EXISTS comments(
   FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
   FOREIGN KEY (answer_id) REFERENCES answers(answer_id) ON DELETE CASCADE
 );
+
+-- like table for answer and question
+
+CREATE TABLE IF NOT EXISTS likes (
+    like_id INT AUTO_INCREMENT PRIMARY KEY,
+    target_id INT NOT NULL,
+    target_type ENUM('question','answer') NOT NULL,
+    user_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_like (target_id, user_id, target_type),
+    CONSTRAINT fk_like_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+-- Indexes for faster queries
+CREATE INDEX idx_likes_target ON likes(target_id);
+CREATE INDEX idx_likes_user ON likes(user_id);
+
