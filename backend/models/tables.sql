@@ -39,3 +39,14 @@ CREATE TABLE IF NOT EXISTS comments(
   FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
   FOREIGN KEY (answer_id) REFERENCES answers(answer_id) ON DELETE CASCADE
 );
+-- Answer votes table
+CREATE TABLE IF NOT EXISTS answer_votes (
+  vote_id INT AUTO_INCREMENT PRIMARY KEY,
+  userid INT NOT NULL,
+  answerid INT NOT NULL,
+  vote_type ENUM('upvote', 'downvote') NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT unique_user_answer_vote UNIQUE (userid, answerid),
+  FOREIGN KEY (userid) REFERENCES users(user_id) ON DELETE CASCADE,
+  FOREIGN KEY (answerid) REFERENCES answers(answer_id) ON DELETE CASCADE
+);
