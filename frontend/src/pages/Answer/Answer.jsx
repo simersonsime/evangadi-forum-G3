@@ -1,33 +1,33 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { format, formatDistanceToNow } from "date-fns";
 import { FaArrowLeft, FaPaperPlane, FaEdit, FaTrash } from "react-icons/fa";
 import { ClipLoader } from "react-spinners";
 
-import styles from "./AnswerPage.module.css";
-import axiosBase from "../../Api/axiosConfig";
-import { AuthContext } from "../../Context/Context";
-import Loader from "../../Components/Loader/Loader";
-import Shared from "../../Components/Shared/Shared";
+import styles from "./Answer.module.css";
+// import axiosBase from "../../Api/axios.js";
+// import { AuthContext } from "../../context/AuthContext.jsx";
+// import Loader from "../../Components/Loader/Loader";
+// import Shared from "../../Components/Shared/Shared";
 
-const api = (token) => ({
-  get: (url) =>
-    axiosBase.get(url, { headers: { Authorization: `Bearer ${token}` } }),
-  post: (url, data) =>
-    axiosBase.post(url, data, {
-      headers: { Authorization: `Bearer ${token}` },
-    }),
-});
+// const api = (token) => ({
+//   get: (url) =>
+//     axiosBase.get(url, { headers: { Authorization: `Bearer ${token}` } }),
+//   post: (url, data) =>
+//     axiosBase.post(url, data, {
+//       headers: { Authorization: `Bearer ${token}` },
+//     }),
+// });
 
-const time = (d) =>
-  `${formatDistanceToNow(new Date(d), { addSuffix: true })} • ${format(
-    new Date(d),
-    "MMM d"
-  )}`;
+// const time = (d) =>
+//   `${formatDistanceToNow(new Date(d), { addSuffix: true })} • ${format(
+//     new Date(d),
+//     "MMM d"
+//   )}`;
 
 function Answer() {
   const { questionid } = useParams();
-  const [{ user, token }] = useContext(AuthContext);
+  // const [{ user, token }] = useContext(AuthContext);
   const navigate = useNavigate();
   const answerRef = useRef();
 
@@ -38,7 +38,7 @@ function Answer() {
     posting: false,
   });
 
-  const apiReq = api(token);
+  // const apiReq = api(token);
 
   useEffect(() => {
     const load = async () => {
@@ -77,7 +77,6 @@ function Answer() {
     );
 
   return (
-    <Shared>
       <div className={styles.main_wrapper}>
         <div className={styles.container}>
           {/* Back */}
@@ -158,7 +157,6 @@ function Answer() {
           </section>
         </div>
       </div>
-    </Shared>
   );
 }
 
