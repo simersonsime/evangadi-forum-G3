@@ -1,6 +1,6 @@
 import express from "express";
 import { postAnswer } from "../controllers/answerController.js";
-import authMiddleware from "../middleware/authMiddleware.js";
+import { authenticateToken } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
