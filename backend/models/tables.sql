@@ -46,19 +46,14 @@ CREATE TABLE IF NOT EXISTS comments(
   FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
   FOREIGN KEY (answer_id) REFERENCES answers(answer_id) ON DELETE CASCADE
 );
-
--- like table for answer and question
-
-CREATE TABLE IF NOT EXISTS likes (
-    like_id INT AUTO_INCREMENT PRIMARY KEY,
-    target_id INT NOT NULL,
-    target_type ENUM('question','answer') NOT NULL,
-    user_id INT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE KEY unique_like (target_id, user_id, target_type),
-    CONSTRAINT fk_like_user FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
+-- Answer votes table
+CREATE TABLE IF NOT EXISTS answer_votes (
+  vote_id INT AUTO_INCREMENT PRIMARY KEY,
+  userid INT NOT NULL,
+  answerid INT NOT NULL,
+  vote_type ENUM('upvote', 'downvote') NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT unique_user_answer_vote UNIQUE (userid, answerid),
+  FOREIGN KEY (userid) REFERENCES users(user_id) ON DELETE CASCADE,
+  FOREIGN KEY (answerid) REFERENCES answers(answer_id) ON DELETE CASCADE
 );
--- Indexes for faster queries
-CREATE INDEX idx_likes_target ON likes(target_id);
-CREATE INDEX idx_likes_user ON likes(user_id);
-
