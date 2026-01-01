@@ -1,3 +1,4 @@
+import db from "../config/database.js";
 /**
  * Post a new answer for a question
  * Endpoint: POST /api/answer/:question_id
