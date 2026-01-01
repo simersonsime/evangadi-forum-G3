@@ -1,12 +1,10 @@
 import bcrypt from "bcryptjs";
 import db from "../config/database.js";
 import dotenv from "dotenv";
-const jwt = require("jsonwebtoken");
 import generateToken from "../utils/generateToken.js";
 dotenv.config();
-const jwt = require("jsonwebtoken");
-const nodemailer = require("nodemailer");
-const crypto = require("crypto");
+import nodemailer from "nodemailer";
+import crypto from "crypto";
 
 /**
  * Helper: Validate email format
@@ -15,6 +13,7 @@ const isValidEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
+
 /**
  * Register a new user
  * Endpoint: POST /api/user/register
@@ -23,6 +22,7 @@ export const registerUser = async (req, res) => {
   try {
     // Extract user details from request body
     const { username, first_name, last_name, email, password } = req.body;
+
     // 1. Validate required fields
     if (!username || !first_name || !last_name || !email || !password) {
       return res.status(400).json({
@@ -30,6 +30,7 @@ export const registerUser = async (req, res) => {
         message: "Please provide all required fields",
       });
     }
+
     // 2. Validate email
     if (!isValidEmail(email)) {
       return res.status(400).json({
@@ -37,6 +38,7 @@ export const registerUser = async (req, res) => {
         message: "Invalid email format",
       });
     }
+
     // 3. Validate username length
     if (username.length < 3 || username.length > 20) {
       return res.status(400).json({
@@ -44,6 +46,7 @@ export const registerUser = async (req, res) => {
         message: "Username must be 3-20 characters long",
       });
     }
+
     // 4. Validate password length
     if (password.length < 8) {
       return res.status(400).json({
@@ -51,6 +54,7 @@ export const registerUser = async (req, res) => {
         message: "Password must be at least 8 characters",
       });
     }
+
     // 5. Check if user exists
     const [existingUser] = await db
       .promise()
@@ -58,12 +62,14 @@ export const registerUser = async (req, res) => {
         username,
         email,
       ]);
+
     if (existingUser.length > 0) {
       return res.status(409).json({
         error: "Conflict",
         message: "User already existed",
       });
     }
+
     // 6. Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -74,6 +80,7 @@ export const registerUser = async (req, res) => {
         "INSERT INTO users (username, first_name, last_name, email, password) VALUES (?, ?, ?, ?, ?)",
         [username, first_name, last_name, email, hashedPassword]
       );
+
     // 8. Success response
     res.status(201).json({
       message: "User registered successfully",
@@ -112,7 +119,7 @@ export const loginUser = async (req, res) => {
   }
 
   try {
-    // 2. Fetch user by email 
+    // 2. Fetch user by email
     const [rows] = await db
       .promise()
       .query("SELECT * FROM users WHERE email = ?", [email]);
@@ -170,7 +177,7 @@ export const checkUser = (req, res) => {
   res
     .status(StatusCodes.OK)
     .json({ msg: "User is authenticated", username, userid });
-}
+};
 
 // Reset password
 export const resetPassword = async (req, res) => {
@@ -238,7 +245,7 @@ export const resetPassword = async (req, res) => {
       msg: "Server error",
     });
   }
-}
+};
 // Verify reset token and update password
 export const verifyResetToken = async (req, res) => {
   const { token, newPassword } = req.body;
@@ -286,4 +293,4 @@ export const verifyResetToken = async (req, res) => {
       msg: "Server error",
     });
   }
-}
+};

@@ -1,5 +1,5 @@
 import db from "../config/database.js";
-const { StatusCodes } = require("http-status-codes");
+import { StatusCodes } from "http-status-codes";
 /**
  * Post a new answer for a question
  * Endpoint: POST /api/answer/:question_id

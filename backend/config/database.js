@@ -6,18 +6,21 @@ const database = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
-  database: process.env.evangadi_forum,
+  database: process.env.MYSQL_DB,
+  port: Number(process.env.DB_PORT),
   waitForConnections: true,
-  port :process.env.PORT,
   connectionLimit: 10,
   queueLimit: 0,
 });
 
-database.getConnection((err) => {
+// Test the database connection
+database.getConnection((err, connection) => {
   if (err) {
-    console.error("Database connection failed:", err.message);
+    console.error("MySQL connection error FULL:", err);
+    return;
   } else {
-    console.log("Connected to MySQL database.");
+    console.log("MySQL connected to evangadi_forum database");
+    connection.release();
   }
 });
 

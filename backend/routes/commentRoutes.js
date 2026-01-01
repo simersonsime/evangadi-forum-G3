@@ -1,20 +1,15 @@
 import express from "express";
-import {
-  postComment,
-  getComments,
-  deleteCommentById,
-} from "../controllers/commentController.js";
-import authMiddleware from "../middleware/authMiddleware.js";
+import { postComment } from "../controllers/commentController.js";
+import { getComments } from "../controllers/commentController.js";
+import { deleteCommentById } from "../controllers/commentController.js";
+import { authenticateToken } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
- 
-router.post("/",authMiddleware, postComment);
+router.post("/", authenticateToken, postComment);
 
- 
 router.get("/:answerid", getComments);
 
- 
-router.delete("/:commentid", authMiddleware, deleteCommentById);
+router.delete("/:commentid", authenticateToken, deleteCommentById);
 
 export default router;

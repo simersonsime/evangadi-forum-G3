@@ -1,8 +1,8 @@
 import express from "express";
-import authMiddleware from "../middleware/authMiddleware.js";
+import { authenticateToken } from "../middleware/authMiddleware.js";
 import { toggleLike } from "../controllers/likeController.js";
 import { getLikeCount } from "../controllers/likeController.js";
-import { authenticateToken } from "../middlewares/authMiddleware.js";
+
 const router = express.Router();
 
 // POST to toggle like
