@@ -9,7 +9,7 @@ The project uses one shared GitHub repository. All team members must work in the
 | No. | Student Name        | Backend Task (No. & Title)                  | Frontend Task (No. & Title)     |
 |----:|---------------------|-------------------------------------------|-------------------------------|
 | 1   | Abdulkaf Nesru      | 1 – Create MySQL Database & Schema         | 11 – Header Component          |
-| 2   | Abdurehman Kero     | 2 – API Documentation                      | 12 – Footer Component          |
+| 2   | Abdurehman Kero     | 2 – API Documentation/post & get Comment for answer  | 12 – Footer Component          |
 | 3   | Afomiya Awoke       | 3 – Authentication Middleware             | 13 – Sign-up Component         |
 | 4   | Ahlam Ahmed         | 4 – Sign-up API                            | 14 – Login Component           |
 | 5   | Lidet Legesse      | 5 – Login API                              | 15 – About Component           |
