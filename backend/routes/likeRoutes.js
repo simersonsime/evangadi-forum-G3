@@ -1,7 +1,7 @@
 import express from "express";
+import { authenticateToken } from "../middleware/authMiddleware.js";
 import { toggleLike } from "../controllers/likeController.js";
 import { getLikeCount } from "../controllers/likeController.js";
-import { authenticateToken } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 

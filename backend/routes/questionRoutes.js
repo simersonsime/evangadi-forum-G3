@@ -1,17 +1,23 @@
 import express from "express";
-import { getAllQuestions } from "../controllers/questionController.js";
-import { getQuestionById } from "../controllers/questionController.js";
-import { authenticateToken } from "../middleware/authMiddleware.js";
-import { postQuestion } from "../controllers/questionController.js";
+import {authenticateToken} from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
-// Public routes
-router.get("/", getAllQuestions);
-router.get("/:id", getQuestionById);
-// router.get("/user/:userId", postQuestion);
+import {
+  getAllQuestions,
+  postQuestion,
+  getQuestionById,
+  editQuestion,
+  deleteQuestion,
+} from "../controllers/questionController.js";
 
-// Protected route
-router.post("/", postQuestion);
+// Public routes  
+router.get("/all-questions", getAllQuestions);
+router.get("/api/question/:question_id", getQuestionById);
+
+// Protected routes
+router.put("/edit-question/:id", authenticateToken, editQuestion);
+router.delete("/delete-question/:id", authenticateToken, deleteQuestion);
+router.post("/post-question", authenticateToken, postQuestion);
 
 export default router;

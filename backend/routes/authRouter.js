@@ -1,16 +1,23 @@
 import express from "express";
-import { registerUser } from "../controllers/authController.js";
-import { loginUser } from "../controllers/authController.js";
-import { checkUser } from "../controllers/authController.js";
-import { authenticateToken } from "../middleware/authMiddleware.js";
 import { registerLimiter, loginLimiter } from "../middleware/rateLimiter.js";
 const router = express.Router();
-
+import {
+  registerUser,
+  loginUser,
+  checkUser,
+  resetPassword,
+  verifyResetToken,
+} from "../controllers/authController.js";
+import { authenticateToken } from "../middleware/authMiddleware.js";
 // Public routes
 router.post("/register", registerLimiter, registerUser); // Signup endpoint
 router.post("/login", loginLimiter, loginUser); // Login endpoint
-
-//  Protected route to check authentication
-router.get("/checkUser", authenticateToken, checkUser);
+router.post("/reset-password", resetPassword); // Reset password endpoint
+router.post("/verify-reset-token", verifyResetToken); // Verify reset token endpoint
+// Protected route to check user authentication status
+router.get("/check-user", authenticateToken, checkUser);
 
 export default router;
+
+
+
