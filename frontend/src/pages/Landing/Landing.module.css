@@ -1,0 +1,94 @@
+.container {
+    height: 100vh;
+    display: flex;
+    background-color: #f7f7f7;
+  }
+  
+  /* LEFT ABOUT SECTION */
+  .left {
+    flex: 1;
+    /* padding: 3rem; */
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .left h1 {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  .left p {
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+  }
+  
+  .links {
+    margin-top: 1.5rem;
+  }
+  
+  .links a {
+    display: inline-block;
+    margin-right: 1.5rem;
+    text-decoration: none;
+    color: #007bff;
+    font-weight: 600;
+  }
+  
+  /* RIGHT AUTH SECTION */
+  .right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .authBox {
+    width: 100%;
+    max-width: 500px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+  }
+  
+  .tabs {
+    display: flex;
+  }
+  
+  .tabs button {
+    flex: 1;
+    padding: 1rem;
+    background-color: #f1f1f1;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  
+  .tabs button:hover {
+    background-color: #e5e5e5;
+  }
+  
+  .active {
+    background-color: #ffffff;
+    color: #007bff;
+    border-bottom: 3px solid #007bff;
+  }
+  
+  .formArea {
+    padding: 2rem;
+  }
+  
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+    }
+  
+    .left {
+      text-align: center;
+    }
+  }
+  
