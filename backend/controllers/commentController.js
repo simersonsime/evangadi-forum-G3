@@ -5,7 +5,6 @@ import {
   deleteComment,
 } from "../models/commentModel.js";
 
- 
 export const postComment = async (req, res) => {
   try {
     // 1. Get data from request body
@@ -13,10 +12,17 @@ export const postComment = async (req, res) => {
 
     // 2. Get user id from authMiddleware (JWT)
     // const { userid } = req.user;
+<<<<<<< HEAD
 const userid = req.body.userid || (req.user ? req.user.userid : null);
 console.log("📨 POST /api/comments called");
 console.log("Request body:", req.body);
 console.log("Request user:", req.user);
+=======
+    const userid = req.body.userid || (req.user ? req.user.userid : null);
+    // console.log(" POST /api/comments called");
+    // console.log("Request body:", req.body);
+    // console.log("Request user:", req.user);
+>>>>>>> main
 
     // 3. Validation
     if (!answerid || !comment_body) {

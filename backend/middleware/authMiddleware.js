@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 
-const authMiddleware = (req, res, next) => {
+export const authenticateToken = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -15,7 +17,6 @@ const authMiddleware = (req, res, next) => {
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-
     req.user = {
       userid: decoded.userid,
       username: decoded.username,
@@ -29,5 +30,3 @@ const authMiddleware = (req, res, next) => {
     });
   }
 };
-
-export default authMiddleware;
