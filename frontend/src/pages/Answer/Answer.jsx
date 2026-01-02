@@ -1,6 +1,6 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { format, formatDistanceToNow } from "date-fns";
+// import { format, formatDistanceToNow } from "date-fns";
 import { FaArrowLeft, FaPaperPlane, FaEdit, FaTrash } from "react-icons/fa";
 import { ClipLoader } from "react-spinners";
 
@@ -24,6 +24,30 @@ import styles from "./Answer.module.css";
 //     new Date(d),
 //     "MMM d"
 //   )}`;
+
+const timeAgo = (date) => {
+  if (!date) return "";
+  const diff = Math.floor((Date.now() - new Date(date)) / 60000);
+  if (diff < 1) return "just now";
+  if (diff < 60) return `${diff} min ago`;
+  if (diff < 1440) return `${Math.floor(diff / 60)} h ago`;
+  return new Date(date).toLocaleDateString();
+};
+
+// const user = { userid: 1, username: "You" };
+
+// function Answer() {
+//   const { questionid } = useParams();
+//   const navigate = useNavigate();
+//   const answerRef = useRef();
+
+//   const [state, setState] = useState({
+//     q: {},
+//     a: [],
+//     loading: true,
+//     posting: false,
+//   });
+
 
 function Answer() {
   const { questionid } = useParams();
@@ -69,6 +93,9 @@ function Answer() {
     setState((s) => ({ ...s, posting: false }));
   };
 
+// UI Rendering   
+
+
   if (state.loading)
     return (
       <div className={styles.loadingContainer}>
@@ -91,7 +118,7 @@ function Answer() {
               <p className={styles.questionContent}>{state.q.content}</p>
               {state.q.created_at && (
                 <span className={styles.questionMeta}>
-                  {time(state.q.created_at)}
+                  {timeAgo(state.q.created_at)}
                 </span>
               )}
             </div>
@@ -116,7 +143,7 @@ function Answer() {
                     </div>
                     <div>
                       <div className={styles.username}>{ans.username}</div>
-                      <div className={styles.time}>{time(ans.created_at)}</div>
+                      <div className={styles.time}>{timeAgo(ans.created_at)}</div>
                     </div>
                   </div>
 
