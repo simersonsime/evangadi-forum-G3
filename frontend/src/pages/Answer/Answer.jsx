@@ -1,30 +1,25 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-// import { format, formatDistanceToNow } from "date-fns";
 import { FaArrowLeft, FaPaperPlane, FaEdit, FaTrash } from "react-icons/fa";
 import { ClipLoader } from "react-spinners";
 
 import styles from "./Answer.module.css";
 // import axiosBase from "../../Api/axios.js";
 // import { AuthContext } from "../../context/AuthContext.jsx";
-// import Loader from "../../Components/Loader/Loader";
-// import Shared from "../../Components/Shared/Shared";
+import Shared from "../../Components/SharedLayout/SharedLayout.jsx";
+
+// ***********
+// API helper with token authorization
+// ***********
 
 // const api = (token) => ({
-//   get: (url) =>
-//     axiosBase.get(url, { headers: { Authorization: `Bearer ${token}` } }),
-//   post: (url, data) =>
-//     axiosBase.post(url, data, {
-//       headers: { Authorization: `Bearer ${token}` },
-//     }),
+//   get: (url) => axiosBase.get(url, { headers: { Authorization: `Bearer ${token}` } }),
+//   post: (url, data) => axiosBase.post(url, data, { headers: { Authorization: `Bearer ${token}` } }),
+//   put: (url, data) => axiosBase.put(url, data, { headers: { Authorization: `Bearer ${token}` } }),
+//   del: (url) => axiosBase.delete(url, { headers: { Authorization: `Bearer ${token}` } }),
 // });
 
-// const time = (d) =>
-//   `${formatDistanceToNow(new Date(d), { addSuffix: true })} • ${format(
-//     new Date(d),
-//     "MMM d"
-//   )}`;
-
+// the timeAgo function to display time in "time ago" format
 const timeAgo = (date) => {
   if (!date) return "";
   const diff = Math.floor((Date.now() - new Date(date)) / 60000);
@@ -34,20 +29,7 @@ const timeAgo = (date) => {
   return new Date(date).toLocaleDateString();
 };
 
-// const user = { userid: 1, username: "You" };
-
-// function Answer() {
-//   const { questionid } = useParams();
-//   const navigate = useNavigate();
-//   const answerRef = useRef();
-
-//   const [state, setState] = useState({
-//     q: {},
-//     a: [],
-//     loading: true,
-//     posting: false,
-//   });
-
+const user = { userid: 1, username: "You" };
 
 function Answer() {
   const { questionid } = useParams();
@@ -58,19 +40,25 @@ function Answer() {
   const [state, setState] = useState({
     q: {},
     a: [],
+    c: {},
     loading: false,
     posting: false,
+    editQ: false,
+    editA: null,
+    editText: "",
   });
-
   // const apiReq = api(token);
 
+  // *****
+  // fetch question and answers
+  // *********
   useEffect(() => {
     const load = async () => {
       setState((s) => ({ ...s, loading: true }));
       try {
         const [{ data: q }, { data: a }] = await Promise.all([
-          apiReq.get(`/questions/${questionid}`),
-          apiReq.get(`/answers/${questionid}`),
+          // apiReq.get(`/questions/${questionid}`),
+          // apiReq.get(`/answers/${questionid}`),
         ]);
         setState((s) => ({ ...s, q: q.question, a: a.answer }));
       } finally {
@@ -80,6 +68,9 @@ function Answer() {
     load();
   }, [questionid]);
 
+  // *********
+  //handlers
+  // *********
   const postAnswer = async (e) => {
     e.preventDefault();
     if (!answerRef.current.value.trim()) return;
@@ -93,17 +84,18 @@ function Answer() {
     setState((s) => ({ ...s, posting: false }));
   };
 
-// UI Rendering   
-
-
   if (state.loading)
     return (
       <div className={styles.loadingContainer}>
         <Loader />
       </div>
     );
+  // ***************
+  // UI Loading State
+  // *****************
 
   return (
+    // <Shared>
       <div className={styles.main_wrapper}>
         <div className={styles.container}>
           {/* Back */}
@@ -143,7 +135,9 @@ function Answer() {
                     </div>
                     <div>
                       <div className={styles.username}>{ans.username}</div>
-                      <div className={styles.time}>{timeAgo(ans.created_at)}</div>
+                      <div className={styles.time}>
+                        {timeAgo(ans.created_at)}
+                      </div>
                     </div>
                   </div>
 
@@ -184,6 +178,7 @@ function Answer() {
           </section>
         </div>
       </div>
+    // </Shared>
   );
 }
 
