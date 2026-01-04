@@ -1,14 +1,14 @@
 import React from "react";
 import classes from "./Footer.module.css";
 import { Link } from "react-router-dom";
-import logo from "../../image/evangadi-logo-footer.png";
+// import logo from "../../image/evangadi-logo-footer.png";
 
 function Footer() {
   return (
     <div className={`${classes["footer"]} d-lg-flex`}>
       <div className={`${classes["footer__left"]} mx-sm-5`}>
         <div className={classes["footer__logo"]}>
-          <img src={logo} alt="" />
+          {/* <img src={logo} alt="" /> */}
         </div>
 
         <div className={`${classes["footer__socialMedias"]} col-sm-12`}>

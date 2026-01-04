@@ -6,9 +6,9 @@ import Home from "./pages/Home/Home";
 import Question from "./pages/Question/Question";
 import AskQuestion from "./pages/AskQuestion/AskQuestion";
 import Answer from "./pages/Answer/Answer";
-import Login from "./pages/Login/Login";
+import Login from "./components/Login/Login"
 // import NotFound from "./Pages/NotFound/NotFound";
-import Signup from "./pages/Signup/Signup";
+import Signup from "./components/Signup/Signup";
 
 function App() {
   return (
