@@ -20,7 +20,7 @@ export const createComment = async (answerId, userId, commentBody) => {
 export const getCommentsByAnswer = async (answerId) => {
   try {
     const query = `
-      SELECT c.*, u.user_name, u.first_name, u.last_name 
+      SELECT c.*, u.username, u.first_name, u.last_name 
       FROM comments c
       JOIN users u ON c.user_id = u.user_id
       WHERE c.answer_id = ?
