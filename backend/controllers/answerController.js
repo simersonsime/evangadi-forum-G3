@@ -5,6 +5,7 @@ import { StatusCodes } from "http-status-codes";
  * Endpoint: POST /api/answer/:question_id
  * Protected route (requires JWT)
  */
+ 
 export const postAnswer = async (req, res) => {
   const { question_id } = req.params;
   let { answer } = req.body;
@@ -48,7 +49,7 @@ export const postAnswer = async (req, res) => {
     const [result] = await db
       .promise()
       .query(
-        "INSERT INTO answers (question_id, user_id, answer) VALUES (?, ?, ?)",
+        "INSERT INTO answers (question_id, user_id, answer_body) VALUES (?, ?, ?)",
         [question_id, user_id, answer]
       );
     // 6. Send success response
@@ -68,54 +69,61 @@ export const postAnswer = async (req, res) => {
   }
 };
 // Get all answers for a specific question
+// Get all answers for a specific question - FIXED
+// Get all answers for a specific question - FINAL FIXED VERSION
 export const getAllAnswer = async (req, res) => {
   const questionId = req.params.question_id;
-  const userId = req.user.userid; // Get the logged-in user's ID
+  
+  console.log("GET /answer/:question_id called for question:", questionId);
 
   try {
-    const [results] = await dbConnection.query(
+    const [results] = await db.promise().query(
       `SELECT 
-        answers.answerid,
-        answers.answer AS content,
-        users.username,
-        users.userid,
-        answers.created_at,
-        answers.likes,
-        answers.dislikes,
-        users.firstname,
-        (SELECT vote_type FROM answer_votes WHERE answer_votes.answerid = answers.answerid AND answer_votes.userid = ?) AS userVote
-      FROM answers
-      JOIN users ON answers.userid = users.userId
-      WHERE answers.questionid = (
-        SELECT questionid FROM questions WHERE id = ?
-      )`,
-      [userId, questionId]
+        a.answer_id,
+        a.answer_body,
+        u.username,
+        u.user_id,
+        u.first_name,
+        u.last_name,
+        u.email,
+        a.created_at
+      FROM answers a
+      JOIN users u ON a.user_id = u.user_id
+      WHERE a.question_id = ?
+      ORDER BY a.created_at ASC`,
+      [questionId]
     );
 
     // Handle case where no answers are found
     if (results.length === 0) {
-      return res.status(StatusCodes.NOT_FOUND).json({
-        error: "Not Found",
-        msg: "The requested answer could not be found",
+      return res.status(200).json({
+        message: "No answers found for this question",
+        answers: [],
+        count: 0
       });
     }
 
-    res.status(StatusCodes.OK).json({ answer: results });
+    res.status(200).json({ 
+      message: "Answers retrieved successfully",
+      answers: results,
+      count: results.length 
+    });
   } catch (error) {
-    console.error(error.message);
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+    console.error("❌ Get answers error:", error.message);
+    console.error("❌ SQL Error:", error.sqlMessage);
+    res.status(500).json({
       error: "Internal Server Error",
-      msg: "An unexpected error occurred",
+      message: "An unexpected error occurred"
     });
   }
-}
+};
 // Delete an answer
 export const deleteAnswer = async (req, res) => {
   const userId = req.user.userid; // Get the logged-in user's ID
   const answerId = req.params.id; // Get the answer ID from the route
 
   try {
-    const [answer] = await dbConnection.query(
+    const [answer] = await db.query(
       "SELECT userid FROM answers WHERE answerid = ?",
       [answerId]
     );
@@ -134,7 +142,7 @@ export const deleteAnswer = async (req, res) => {
       });
     }
 
-    await dbConnection.query("DELETE FROM answers WHERE answerid = ?", [
+    await db.query("DELETE FROM answers WHERE answerid = ?", [
       answerId,
     ]);
 
@@ -158,7 +166,7 @@ export const voteAnswer = async (req, res) => {
   }
 
   try {
-    const [existingVote] = await dbConnection.query(
+    const [existingVote] = await db.query(
       "SELECT vote_type FROM answer_votes WHERE userid = ? AND answerid = ?",
       [userId, answerId]
     );
@@ -168,13 +176,13 @@ export const voteAnswer = async (req, res) => {
 
       if (currentVote === voteType) {
         // User clicked the same vote again → remove it
-        await dbConnection.query(
+        await db.query(
           "DELETE FROM answer_votes WHERE userid = ? AND answerid = ?",
           [userId, answerId]
         );
 
         const column = voteType === "upvote" ? "likes" : "dislikes";
-        await dbConnection.query(
+        await db.query(
           `UPDATE answers SET ${column} = ${column} - 1 WHERE answerid = ?`,
           [answerId]
         );
@@ -182,7 +190,7 @@ export const voteAnswer = async (req, res) => {
         return res.status(200).json({ msg: `${voteType} removed` });
       } else {
         // User switched vote (upvote ⇄ downvote)
-        await dbConnection.query(
+        await db.query(
           "UPDATE answer_votes SET vote_type = ? WHERE userid = ? AND answerid = ?",
           [voteType, userId, answerId]
         );
@@ -190,7 +198,7 @@ export const voteAnswer = async (req, res) => {
         const addColumn = voteType === "upvote" ? "likes" : "dislikes";
         const removeColumn = voteType === "upvote" ? "dislikes" : "likes";
 
-        await dbConnection.query(
+        await db.query(
           `UPDATE answers SET ${addColumn} = ${addColumn} + 1, ${removeColumn} = ${removeColumn} - 1 WHERE answerid = ?`,
           [answerId]
         );
@@ -199,13 +207,13 @@ export const voteAnswer = async (req, res) => {
       }
     } else {
       // First time voting
-      await dbConnection.query(
+      await db.query(
         "INSERT INTO answer_votes (userid, answerid, vote_type) VALUES (?, ?, ?)",
         [userId, answerId, voteType]
       );
 
       const column = voteType === "upvote" ? "likes" : "dislikes";
-      await dbConnection.query(
+      await db.query(
         `UPDATE answers SET ${column} = ${column} + 1 WHERE answerid = ?`,
         [answerId]
       );
@@ -232,7 +240,7 @@ export const editAnswer = async (req, res) => {
 
   try {
     // Check if the answer exists and belongs to the logged-in user
-    const [answer] = await dbConnection.query(
+    const [answer] = await db.query(
       "SELECT userid FROM answers WHERE answerid = ?",
       [answerId]
     );
@@ -252,7 +260,7 @@ export const editAnswer = async (req, res) => {
     }
 
     // Update the answer content
-    await dbConnection.query(
+    await db.query(
       "UPDATE answers SET answer = ? WHERE answerid = ?",
       [content, answerId]
     );
@@ -283,7 +291,7 @@ export const addComment = async (req, res) => {
   }
 
   try {
-    await dbConnection.query(
+    await db.query(
       "INSERT INTO comments (answerid, userid, content) VALUES (?, ?, ?)",
       [answerId, userId, content]
     );
@@ -305,7 +313,7 @@ export const getComments = async (req, res) => {
   const answerId = req.params.answerId; // Get the answer ID from the route
 
   try {
-    const [comments] = await dbConnection.query(
+    const [comments] = await db.query(
       `SELECT 
         comments.commentid,
         comments.content,
@@ -334,7 +342,7 @@ export const deleteComment = async (req, res) => {
   const commentId = req.params.commentId; // Get the comment ID from the route
 
   try {
-    const [comment] = await dbConnection.query(
+    const [comment] = await db.query(
       "SELECT userid FROM comments WHERE commentid = ?",
       [commentId]
     );
@@ -353,7 +361,7 @@ export const deleteComment = async (req, res) => {
       });
     }
 
-    await dbConnection.query("DELETE FROM comments WHERE commentid = ?", [
+    await db.query("DELETE FROM comments WHERE commentid = ?", [
       commentId,
     ]);
 
