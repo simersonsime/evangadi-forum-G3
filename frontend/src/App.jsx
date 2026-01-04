@@ -9,6 +9,8 @@ import Answer from "./pages/Answer/Answer";
 import Login from "./pages/Login/Login";
 // import NotFound from "./Pages/NotFound/NotFound";
 import Signup from "./pages/Signup/Signup";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 function App() {
   return (

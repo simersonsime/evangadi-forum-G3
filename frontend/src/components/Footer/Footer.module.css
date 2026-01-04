@@ -32,7 +32,7 @@
        color: lightgrey;
        
    }
-    a {
+    a i {
       color: white;
    }
 
@@ -43,8 +43,16 @@
     .footer__socialMedias{
         justify-content: center;
         margin-bottom: 10px;
-        font-size: 30px ;
+        /* font-size: 30px ; */
+     
+  color: #fff;
+  font-size: 22px; 
+
     }
+    Link i  {
+  color: white;
+}
+
     .footer__right{
         margin: 15px 0;
     }
