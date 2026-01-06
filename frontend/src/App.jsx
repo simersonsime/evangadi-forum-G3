@@ -6,8 +6,8 @@ import Home from "./pages/Home/Home";
 import Question from "./pages/Question/Question";
 import AskQuestion from "./pages/AskQuestion/AskQuestion";
 import Answer from "./pages/Answer/Answer";
-import Login from "./components/Login/Login"
-// import NotFound from "./Pages/NotFound/NotFound";
+import Login from "./components/Login/Login";
+// import NotFound from "./pages/NotFound/NotFound";
 import Signup from "./components/Signup/Signup";
 
 export const UserState = createContext();
