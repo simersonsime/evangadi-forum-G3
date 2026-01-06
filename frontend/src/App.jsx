@@ -9,6 +9,8 @@ import Answer from "./pages/Answer/Answer";
 import Login from "./components/Login/Login";
 import NotFound from "./pages/NotFound/NotFound";
 import Signup from "./components/Signup/Signup";
+import ForgotPassword from "./components/Login/ForgotPassword";
+import ResetPassword from "./components/Login/ResetPassword";
 
 export const UserState = createContext();
 
@@ -25,6 +27,8 @@ function App() {
           <Route path="answer/:id" element={<Answer />} />
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
+          <Route path="forgot-password" element={<ForgotPassword />} />
+          <Route path="reset-password" element={<ResetPassword />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
