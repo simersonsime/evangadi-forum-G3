@@ -1,114 +1,52 @@
-.pageWrapper {
-  height: 100vh;
-  background-color: #fff;
-  padding: 2rem 4rem;
+.home__welcome h6{
+  font-size: 18px;
+ }
+ .home__user{
+  font-size: 15px;
+  font-weight: 600;
+ }
+.home__qbtn button{
+    background-color: #516cf0;
+    border-radius: 7px;
+    border: none;
+    width: 150px;
+    font-size: 14px;
+}
+.home__container {
+    width: 100%; 
+    padding-left: 100px;
+    padding-right: 100px;
+}
+.home__top{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 120px;
+
+}
+.home__qbtn button a {
+    text-decoration-line: none;
+}
+.logoutBtn{
+align-items: center;
+margin: auto;
+background-color: #516cf0;
+border-radius: 7px;
+color: white;
+width: 150px;
 }
 
-/* Top Bar */
-.topBar {
+
+.home__questions {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 2rem;
 }
-
-.askBtn {
-  background-color: #516cf0;
-  color: #fff;
-  padding: 0.6rem 1.4rem;
-  border-radius: 6px;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-.askBtn:hover {
-  background-color: #3f57d3;
-}
-
-.welcome {
-  font-size: 1rem;
-}
-
-.welcome span {
+.home__question {
+  padding-top: 25px;
+  padding-left: 55px;
+  padding-right: 10px;
+  width: 450px;
+  font-size: 18px;
   font-weight: 600;
 }
-
-.title {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  border-bottom: 1px solid #ddd;
-  padding-bottom: 0.5rem;
-}
-
-.list {
-  display: flex;
-  flex-direction: column;
-}
-
-.questionRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 1.2rem 0;
-  border-bottom: 1px solid #eee;
-  text-decoration: none;
-  color: #000;
-}
-
-.questionRow:hover {
-  background-color: #fafafa;
-}
-
-/* User Info */
-.userInfo {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  width: 200px;
-}
-
-.avatar {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  background-color: #ccc;
-}
-
-.username {
-  font-size: 0.9rem;
-  color: #555;
-}
-
-/* Question Text */
-.questionText {
-  flex: 1;
-  font-size: 1rem;
-  color: #222;
-}
-
-/* Arrow */
-.arrow {
-  font-size: 1.4rem;
-  color: #999;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .pageWrapper {
-    padding: 1.5rem;
-  }
-
-  .questionRow {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.8rem;
-  }
-
-  .userInfo {
-    width: 100%;
-  }
-
-  .arrow {
-    align-self: flex-end;
-  }
+.home__questionsArrow {
+margin-left: 50%;
 }
