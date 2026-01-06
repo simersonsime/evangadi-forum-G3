@@ -1,93 +1,79 @@
-import { useEffect, useState } from "react";
-import styles from "./Question.module.css";
+import { useEffect, useState, useContext } from "react";
+import  api from "../../Api/axios.js"; 
+import QuestionCard from "../../components/QuestionCard/QuestionCard.jsx"; // QuestionCard
+import Loader from "../../components/Loader/Loader.jsx"; // Loader
+import styles from "./Question.module.css"; // CSS
+import { UserState } from "../../App.jsx";
+
 
 function Question() {
   const [questions, setQuestions] = useState([]); // Store all questions
-  const [loading, setLoading] = useState(false); // Loading state
-  const [searchQuery, setSearchQuery] = useState(""); // Search query
-  const [currentPage, setCurrentPage] = useState(1); // Pagination
-  const questionsPerPage = 5;
+  const [loading, setLoading] = useState(false); // Loader state
+  const [searchQuery, setSearchQuery] = useState(""); // Search query state
+  const [currentPage, setCurrentPage] = useState(1); // Current page state
+  const questionsPerPage = 5; // Number of questions per page
 
-  // -----------------------------
-  // TEMP: Fake API data for now
-  // Replace this block with real API call when backend is ready
-  // -----------------------------
+  const { user } = useContext(UserState);
+
+  // Fetch questions from API
   useEffect(() => {
     setLoading(true);
-
-    const fakeQuestions = [
-      {
-        questionid: 1,
-        title: "Example Question 1",
-        description: "This is the description for question 1.",
-        username: "UserA",
-        createdAt: "2026-01-03",
-      },
-      {
-        questionid: 2,
-        title: "Example Question 2",
-        description: "This is the description for question 2.",
-        username: "UserB",
-        createdAt: "2026-01-02",
-      },
-      {
-        questionid: 3,
-        title: "Example Question 3",
-        description: "This is the description for question 3.",
-        username: "UserC",
-        createdAt: "2026-01-01",
-      },
-    ];
-
-    setTimeout(() => {
-      setQuestions(fakeQuestions);
+    axiosInstance.get("/question").then((res) => {
+      setQuestions(res.data.message); // Set questions from API response
       setLoading(false);
-    }, 500);
+    });
   }, []);
 
-  // -----------------------------
   // Filter questions based on search query
-  // -----------------------------
-  const filteredQuestions = questions.filter(
-    (q) =>
-      q.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      q.description.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  const filteredQuestions = questions.filter((question) => {
+    const titleMatches = question.title
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const descriptionMatches = question.description
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    return titleMatches || descriptionMatches;
+  });
 
-  // -----------------------------
   // Pagination logic
-  // -----------------------------
-  const indexOfLastQuestion = currentPage * questionsPerPage;
-  const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage;
+  const indexOfLastQuestion = currentPage * questionsPerPage; // Index of the last question
+  const indexOfFirstQuestion = indexOfLastQuestion - questionsPerPage; // Index of the first question
   const currentQuestions = filteredQuestions.slice(
     indexOfFirstQuestion,
     indexOfLastQuestion
-  );
-  const totalPages = Math.ceil(filteredQuestions.length / questionsPerPage);
+  ); // Get the current page's questions
 
-  const handlePrevious = () =>
-    currentPage > 1 && setCurrentPage(currentPage - 1);
-  const handleNext = () =>
-    currentPage < totalPages && setCurrentPage(currentPage + 1);
+  const totalPages = Math.ceil(filteredQuestions.length / questionsPerPage); // Total pages calculation
+
+  // Handlers for "Previous" and "Next" buttons
+  const handlePrevious = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1); // Go to previous page
+    }
+  };
+
+  const handleNext = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1); // Go to next page
+    }
+  };
 
   return (
     <div className={styles.container}>
-      {/* Search input */}
       <div className={styles.search_question}>
         <input
           type="text"
           placeholder="Search for a question"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={(e) => setSearchQuery(e.target.value)} // Update search query
         />
       </div>
-
       <hr />
       <h1 className={styles.title}>Questions</h1>
 
-      {/* Loading state */}
+      {/* Display loader when loading */}
       {loading ? (
-        <p style={{ textAlign: "center", marginTop: "50px" }}>Loading...</p>
+        <Loader />
       ) : filteredQuestions.length === 0 ? (
         <div
           style={{
@@ -103,45 +89,38 @@ function Question() {
         </div>
       ) : (
         <>
-          {/* Question cards */}
-          {currentQuestions.map((q) => (
-            <div key={q.questionid} className={styles.questionCard}>
-              <h3>{q.title}</h3>
-              <p>{q.description}</p>
-              <span>
-                By: {q.username} | {q.createdAt}
-              </span>
-
-              {/* TODO: Replace this <div> with <QuestionCard /> component
-                  once the backend and QuestionCard component are ready:
-                  
-                  <QuestionCard
-                    key={q.questionid}
-                    id={q.questionid}
-                    userName={q.username}
-                    questionTitle={q.title}
-                    description={q.description}
-                    question_date={q.createdAt}
-                  />
-              */}
-            </div>
+          {/* Display questions for the current page */}
+          {currentQuestions.map((question) => (
+            <QuestionCard
+              key={question.questionid}
+              id={question.questionid}
+              userName={question.username}
+              questionTitle={question.title}
+              description={question.description}
+              question_date={question.createdAt}
+            />
           ))}
 
           {/* Pagination controls */}
           <div className={styles.pagination}>
+            {/* Previous Button */}
             <button
               onClick={handlePrevious}
-              disabled={currentPage === 1}
+              disabled={currentPage === 1} // Disable if on first page
               style={{ marginRight: "10px", padding: "10px" }}
             >
               Previous
             </button>
+
+            {/* Page information */}
             <span>
               Page {currentPage} of {totalPages}
             </span>
+
+            {/* Next Button */}
             <button
               onClick={handleNext}
-              disabled={currentPage === totalPages}
+              disabled={currentPage === totalPages} // Disable if on last page
               style={{ marginLeft: "10px", padding: "10px" }}
             >
               Next

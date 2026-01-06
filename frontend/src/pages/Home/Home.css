@@ -1,0 +1,52 @@
+.home__welcome h6{
+  font-size: 18px;
+ }
+ .home__user{
+  font-size: 15px;
+  font-weight: 600;
+ }
+.home__qbtn button{
+    background-color: #516cf0;
+    border-radius: 7px;
+    border: none;
+    width: 150px;
+    font-size: 14px;
+}
+.home__container {
+    width: 100%; 
+    padding-left: 100px;
+    padding-right: 100px;
+}
+.home__top{
+    display: flex;
+    justify-content: space-between;
+    margin: 0 120px;
+
+}
+.home__qbtn button a {
+    text-decoration-line: none;
+}
+.logoutBtn{
+align-items: center;
+margin: auto;
+background-color: #516cf0;
+border-radius: 7px;
+color: white;
+width: 150px;
+}
+
+
+.home__questions {
+  display: flex;
+}
+.home__question {
+  padding-top: 25px;
+  padding-left: 55px;
+  padding-right: 10px;
+  width: 450px;
+  font-size: 18px;
+  font-weight: 600;
+}
+.home__questionsArrow {
+margin-left: 50%;
+}

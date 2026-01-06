@@ -1,0 +1,177 @@
+.Login_Wrapper {
+  background-image: url("https://www.evangadi.com/themes/humans/assets/images/misc/bg-svg-f.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.centered_container {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+  max-width: 1200px;
+  box-sizing: border-box;
+}
+
+.login_box {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+  text-align: left;
+  margin: 20px auto;
+  transition: transform 0.3s ease;
+}
+
+.login_box:hover {
+  transform: translateY(-5px);
+}
+
+.login_box h5 {
+  font-size: 24px;
+  font-weight: 700;
+  color: rgb(45, 56, 94);
+  margin-bottom: 10px;
+}
+
+.login_box h6 {
+  font-size: 16px;
+}
+
+.formGroup {
+  margin-bottom: 15px;
+  width: 100%;
+  position: relative; /* for positioning the eye icon */
+}
+
+.input {
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0 20px 0;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+.input:focus {
+  border-color: #ff8500;
+  box-shadow: 0 0 5px rgba(255, 133, 0, 0.5);
+  outline: none;
+}
+
+.eyes {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #555;
+  transition: color 0.3s ease;
+}
+
+.eyes:hover {
+  color: #ff8500;
+}
+
+.activeEye {
+  color: #ff8500 !important;
+}
+
+.create {
+  color: orangered;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.create:hover {
+  color: #ff5c00;
+}
+
+.forgotPasswordLink {
+  display: inline-block;
+  margin-top: 5px;
+  color: orangered;
+  text-decoration: none;
+  font-size: 14px;
+  transition: color 0.3s ease;
+}
+
+.forgotPasswordLink:hover {
+  color: #ff5c00;
+}
+
+.loginButton {
+  width: 100%;
+  padding: 12px;
+  background-color: #ff8500;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  font-family: inherit;
+}
+
+.loginButton:hover {
+  background-color: #ff5c00;
+  transform: translateY(-2px);
+}
+
+.loginButton:disabled {
+  background-color: #ffa366;
+  cursor: not-allowed;
+}
+
+.register_link {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+.errorMessage {
+  color: red;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  .centered_container {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+  }
+
+  .login_box {
+    margin: 0;
+    max-width: 530px;
+    padding: 70px;
+  }
+}
+
+@media (max-width: 767px) {
+  .centered_container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .login_box {
+    max-width: 90%;
+    padding: 30px;
+  }
+}
+
+

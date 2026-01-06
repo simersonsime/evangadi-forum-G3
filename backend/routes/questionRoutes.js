@@ -1,8 +1,5 @@
 import express from "express";
-import {authenticateToken} from "../middleware/authMiddleware.js";
-
-const router = express.Router();
-
+import { authenticateToken } from "../middleware/authMiddleware.js";
 import {
   getAllQuestions,
   postQuestion,
@@ -11,13 +8,15 @@ import {
   deleteQuestion,
 } from "../controllers/questionController.js";
 
-// Public routes  
-router.get("/all-questions", getAllQuestions);
-router.get("/api/question/:question_id", getQuestionById);
+const router = express.Router();
+
+// Public routes
+router.get("/", getAllQuestions); // GET /api/question
+router.get("/:question_id", getQuestionById); // GET /api/question/1
 
 // Protected routes
-router.put("/edit-question/:id", authenticateToken, editQuestion);
-router.delete("/delete-question/:id", authenticateToken, deleteQuestion);
-router.post("/post-question", authenticateToken, postQuestion);
+router.post("/", authenticateToken, postQuestion); // POST /api/question
+router.put("/:question_id", authenticateToken, editQuestion); // PUT /api/question/1
+router.delete("/:question_id", authenticateToken, deleteQuestion); // DELETE /api/question/1
 
 export default router;
