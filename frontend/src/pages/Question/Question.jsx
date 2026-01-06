@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from "react";
-import { api as axiosInstance } from "../../Api/axios.js"; // axios
+import  api from "../../Api/axios.js"; 
 import QuestionCard from "../../components/QuestionCard/QuestionCard.jsx"; // QuestionCard
 import Loader from "../../components/Loader/Loader.jsx"; // Loader
 import styles from "./Question.module.css"; // CSS

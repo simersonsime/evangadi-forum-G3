@@ -1,86 +1,144 @@
-import axios from "axios";
-import styles from "./Home.module.css";
-import React, { useContext, useEffect } from "react";
+import "./Home.css";
+import { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { UserContext } from "../../context/UserContext";
-import AccountCircleTwoToneIcon from "@material-ui/icons/AccountCircleTwoTone";
-import ArrowForwardIosTwoToneIcon from "@material-ui/icons/ArrowForwardIosTwoTone";
+import { GrFormNext } from "react-icons/gr";
+import { FaUserCircle } from "react-icons/fa";
+import { useAuth } from "../../context/AuthContext";
+import api from "../../Api/axios";
 
+const QUESTIONS_PER_PAGE = 5;
 
-function Home() {
-  const [userData, setUserData] = useContext(UserContext);
+const Home = () => {
+  const { user } = useAuth();
   const navigate = useNavigate();
 
+  const [questions, setQuestions] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [search, setSearch] = useState("");
+
+  // Redirect if not logged in
   useEffect(() => {
-    if (!userData.user) navigate("/login");
+    if (!user) navigate("/landing");
+  }, [user, navigate]);
 
-    const fetch = async () => {
-      const response = await axios.get("http://localhost:4000/api/questions");
-
-      setUserData({
-        ...userData,
-        questions: response.data.questions,
-      });
+  // Fetch questions
+  useEffect(() => {
+    let isMounted = true;
+    const fetchQuestions = async () => {
+      try {
+        const res = await api.get("/question");
+        if (isMounted) setQuestions(res.data.questions || []);
+      } catch (err) {
+        console.error(err);
+        if (isMounted) setError("Failed to load questions.");
+      } finally {
+        if (isMounted) setLoading(false);
+      }
     };
-    fetch();
-  }, [userData.user, navigate]);
+    fetchQuestions();
+    return () => (isMounted = false);
+  }, []);
 
-  const handleClick = (item) => {
-    setUserData({
-      ...userData,
-      singleQuestion: {
-        post_id: item.post_id,
-        question_id: item.question_id,
-      },
+  /* Format date */
+  const formatDate = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return date.toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
     });
-    navigate("/answer");
   };
 
-  return (
-    <div className={styles["home"]}>
-      <hr />
+  // Filter + Pagination
+  const filteredQuestions = questions.filter((q) =>
+    q.title?.toLowerCase().includes(search.toLowerCase())
+  );
 
-      <div className={styles["home__top"]}>
-        <div className={styles["home__qbtn"]}>
-          <button className="mb-5">
-            <Link to="/question">Ask Question</Link>
-          </button>
+  const totalPages = Math.ceil(filteredQuestions.length / QUESTIONS_PER_PAGE);
+  const startIndex = (currentPage - 1) * QUESTIONS_PER_PAGE;
+  const currentQuestions = filteredQuestions.slice(
+    startIndex,
+    startIndex + QUESTIONS_PER_PAGE
+  );
+
+  const goToPage = (page) => {
+    if (page < 1 || page > totalPages) return;
+    setCurrentPage(page);
+  };
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+
+  return (
+    <div className="home">
+      <div className="home__top">
+        <div className="home__qbtn">
+          <Link to="/ask-question">
+            <button>Ask Question</button>
+          </Link>
         </div>
 
-        <div className={styles["home__welcome"]}>
-          <h6>Welcome: {userData.user?.display_name}</h6>
+        <div className="home__welcome">
+          <h6>Welcome: {user.name}</h6>
         </div>
       </div>
 
-      <div className={styles["home__container"]}>
+      {/* Search bar */}
+      <div className="search__container">
+        <input
+          type="text"
+          placeholder="Search questions..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="search__input"
+        />
+      </div>
+
+      <div className="home__container">
         <h3>Questions</h3>
-        <hr className="mt-4" />
+        <hr />
 
-        {userData.questions?.map((item) => (
-          <div key={item.question_id}>
-            <div
-              className={styles["home__questions"]}
-              onClick={() => handleClick(item)}
-            >
-              <div>
-                <AccountCircleTwoToneIcon style={{ fontSize: "60px" }} />
-                <div className={`${styles["home__user"]} mx-3`}>
-                  {item.user_name}
+        {currentQuestions.length === 0 ? (
+          <p>No questions found.</p>
+        ) : (
+          currentQuestions.map((item) => (
+            <div key={item.post_id}>
+              <div
+                className="home__questions"
+                onClick={() => navigate(`/answer/${item.question_id}`)}>
+                <div className="home__userInfo">
+                  <FaUserCircle className="user__icon" />
+                  <div className="home__user">{item.username}</div>
+                  <span className="answerDate">
+                    {formatDate(item.created_at)}
+                  </span>
                 </div>
+                <div className="home__question">
+                  {item.title || item.question}
+                </div>
+                <GrFormNext className="home__questionsArrow" />
               </div>
-
-              <div className={styles["home__question"]}>{item.question}</div>
-
-              <ArrowForwardIosTwoToneIcon
-                className={`${styles["home__questionsArrow"]} mt-4`}
-              />
+              <hr />
             </div>
-            <hr />
+          ))
+        )}
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="pagination">
+            <button onClick={() => goToPage(currentPage - 1)}>Prev</button>
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
+            <button onClick={() => goToPage(currentPage + 1)}>Next</button>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );
-}
+};
 
 export default Home;
