@@ -59,28 +59,3 @@
   font-size: 16px;
   align-self: center;
 }
-
-.questionCard {
-  background-color: #f9f9f9; /* light gray background */
-  padding: 15px 20px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.questionCard h3 {
-  margin: 0 0 8px 0;
-  font-size: 20px;
-  color: var(--primary-color);
-}
-
-.questionCard p {
-  margin: 0 0 10px 0;
-  font-size: 16px;
-  color: #333;
-}
-
-.questionCard span {
-  font-size: 14px;
-  color: #666;
-}

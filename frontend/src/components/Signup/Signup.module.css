@@ -1,0 +1,173 @@
+/* ========Layout Wrappers====== */
+/* Center the signup card in the page */
+.signupWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f6f8;
+}
+
+/* Signup card container */
+.signupCard {
+  width: 100%;
+  max-width: 400px;
+  background: #ffffff;
+  padding: 1rem 2rem;
+  margin: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+/* Row for First Name and Last Name inputs */
+.nameRow {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+}
+
+/* =========== Text Elements======= */
+/* Card title */
+.title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.4rem;
+}
+
+/* Card subtitle with inline link */
+.subtitle {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+/* Inline link in subtitle */
+.inlineLink {
+  margin-left: 0.25rem;
+  color: #f47b20;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.inlineLink:hover {
+  text-decoration: underline;
+}
+
+/* Error message styling */
+.error {
+  background-color: #ffe5e5;
+  color: #b00020;
+  padding: 0.6rem;
+  margin-bottom: 0.8rem;
+  border-radius: 4px;
+  font-size: 0.95rem;
+}
+
+/* Terms text at bottom of form */
+.terms {
+  margin-top: 1.2rem;
+  font-size: 1rem;
+  color: #777;
+}
+
+.terms a {
+  color: #f47b20;
+  text-decoration: none;
+}
+
+.terms a:hover {
+  text-decoration: underline;
+}
+
+/* Bottom link for users who already have an account */
+.bottomLink {
+  display: inline-block;
+  font-size: 0.95rem;
+  color: #f47b20;
+  text-decoration: none;
+}
+
+.bottomLink:hover {
+  text-decoration: underline;
+}
+
+/* ============== Form & Inputs ======== */
+/* Form container */
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Default input styling */
+.input {
+  width: 100%;
+  padding: 0.75rem 0.4rem;
+  margin-bottom: 1rem;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+/* Focus state for inputs */
+.input:focus {
+  outline: none;
+  border-color: #5b6ee1;
+}
+
+/* First Name & Last Name inputs inside nameRow */
+.nameRow .input {
+  flex: 1;
+  width: calc((100% - 12px) / 2);
+}
+
+/* Password wrapper */
+.passwordWrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* Show/Hide password icon */
+.eyeIcon {
+  position: absolute;
+  top: 35%;
+  right: 1rem;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 1.2rem;
+  user-select: none;
+}
+.eyeIcon:hover {
+  color: #f47b20;
+}
+
+/* ============ Buttons ========= */
+.submitBtn {
+  margin-top: 0.5rem;
+  padding: 0.8rem;
+  background-color: #5b6ee1;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.submitBtn:hover {
+  background-color: #4a5fd0;
+}
+
+/* ============Responsive Styles========== */
+
+@media (max-width: 480px) {
+  /* Reduce card padding on small screens */
+  .signupCard {
+    padding: 2rem 1.5rem;
+  }
+
+  .nameRow {
+    flex-direction: column;
+  }
+}
