@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { api } from "../../Api/axios";
+import  api  from "../../Api/axios";
 import { useAuth } from "../../context/AuthContext";
 import classes from "./Login.module.css";
 import { FaEye } from "react-icons/fa";
