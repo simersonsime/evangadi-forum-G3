@@ -9,6 +9,8 @@ import Answer from "./pages/Answer/Answer";
 import Login from "./pages/Login/Login";
 // import NotFound from "./Pages/NotFound/NotFound";
 import Signup from "./pages/Signup/Signup";
+import About from "./components/About/About";
+
 
 function App() {
   return (
@@ -19,8 +21,10 @@ function App() {
         <Route path="question/:id" element={<Question />} />
         <Route path="ask-question" element={<AskQuestion />} />
         <Route path="answer/:id" element={<Answer />} />
+
         <Route path="login" element={<Login />} />
         <Route path="login" element={<Signup />} />
+           <Route path="about" element={<About />} />
         {/* <Route path="*" element={<NotFound />} /> */}
       </Route>
     </Routes>
