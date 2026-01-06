@@ -1,0 +1,140 @@
+.answer {
+  margin: 20px;
+  top: 0;
+  padding: 0px 200px;
+}
+
+.question__link a {
+  text-decoration-line: none;
+  color: black;
+}
+.answer__button button {
+  background: #516cf0;
+  color: white;
+  border-radius: 6px;
+  border-color: white;
+  margin-right: 600px;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.answer__info {
+  display: flex;
+  padding-top: 12px;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.question__box {
+  padding: 0px;
+  border-bottom: 1px solid #d1d5db;
+}
+
+.question__box h2 {
+  font-size: 22px;
+  font-weight: 700;
+  padding: 0px;
+  margin: 0px;
+}
+
+.question__box h4 {
+  font-size: 18px;
+  font-weight: 600;
+  padding: 8px 0px;
+  margin: 0px;
+}
+
+.question__box p {
+  font-size: 16px;
+  padding-bottom: 12px;
+  margin: 0px;
+}
+
+.user__container {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+  margin-bottom: 10px;
+}
+
+.user__icon {
+  color: #b3d3d3;
+  font-size: 50px;
+}
+
+.userName {
+  font-weight: 500;
+  color: #111827;
+  font-size: 16px;
+}
+
+.answerDate {
+  font-size: 14px;
+  font-style: italic;
+}
+.answer__desc {
+  margin-left: 20px;
+  padding: 16px;
+  font-size: 16px;
+  align-items: center;
+  font-weight: 500;
+}
+.answer__link a {
+  text-decoration: none;
+  color: black;
+  font-size: 16px;
+}
+.answer__link {
+  text-align: center;
+  padding: 10px;
+}
+
+.answer__button button {
+  display: inline-flex;
+  align-items: center;
+  margin: 0 auto 45px;
+  border-radius: 6px;
+  padding: 0.5rem 1.25rem;
+  background-color: #516cf0;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.answer__box {
+  width: 100%;
+  box-shadow: 10px 10px 5px rgb(221, 212, 212);
+  border-radius: 20px;
+  margin-top: 36px;
+  padding-left: 40px;
+}
+
+.question__form {
+  width: 96%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.answer__topQuestion {
+  text-align: center;
+  font-size: 22px;
+  margin-top: 40px;
+  font-weight: bold;
+}
+.answer__community {
+  font-size: 22px;
+  font-weight: 700;
+  padding: 16px 0px;
+  border-bottom: 1px solid #d1d5db;
+}
+.question__form {
+  min-height: 180px;
+  border: 1px solid #d1d5db;
+  padding: 10px;
+  font-size: 12px;
+  border-radius: 10px;
+  resize: vertical;
+}
+.form input:focus,
+.form textarea:focus {
+  border-color: #4f46e5;
+}
