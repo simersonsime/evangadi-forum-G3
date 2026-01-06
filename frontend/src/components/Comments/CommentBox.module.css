@@ -1,0 +1,70 @@
+.commentSection {
+  margin: 20px 0;
+}
+
+.commentBtn {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.commentBtn:hover {
+  background: #0056b3;
+}
+
+.inputBox {
+  margin-bottom: 20px;
+}
+
+.inputBox textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.buttons button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.buttons button:first-child {
+  background: #28a745;
+  color: white;
+}
+
+.buttons button:last-child {
+  background: #6c757d;
+  color: white;
+}
+
+.commentsList {
+  margin-top: 20px;
+}
+
+.comment {
+  background: #f8f9fa;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.comment p {
+  margin: 0 0 5px 0;
+}
+
+.comment small {
+  color: #666;
+  font-size: 12px;
+}
