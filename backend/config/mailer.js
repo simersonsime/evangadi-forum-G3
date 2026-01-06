@@ -14,3 +14,4 @@ try {
 };
 
 export default sendEmail;
+// email utility to send emails using nodemailer transporter
