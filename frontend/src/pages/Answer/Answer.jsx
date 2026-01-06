@@ -4,20 +4,20 @@ import { FaArrowLeft, FaPaperPlane, FaEdit, FaTrash } from "react-icons/fa";
 import { ClipLoader } from "react-spinners";
 
 import styles from "./Answer.module.css";
-// import axiosBase from "../../Api/axios.js";
-// import { AuthContext } from "../../context/AuthContext.jsx";
+import axiosBase from "../../Api/axios.js";
+import { AuthContext } from "../../context/AuthContext.jsx";
 import Shared from "../../Components/SharedLayout/SharedLayout.jsx";
 
 // ***********
 // API helper with token authorization
 // ***********
 
-// const api = (token) => ({
-//   get: (url) => axiosBase.get(url, { headers: { Authorization: `Bearer ${token}` } }),
-//   post: (url, data) => axiosBase.post(url, data, { headers: { Authorization: `Bearer ${token}` } }),
-//   put: (url, data) => axiosBase.put(url, data, { headers: { Authorization: `Bearer ${token}` } }),
-//   del: (url) => axiosBase.delete(url, { headers: { Authorization: `Bearer ${token}` } }),
-// });
+const api = (token) => ({
+  get: (url) => axiosBase.get(url, { headers: { Authorization: `Bearer ${token}` } }),
+  post: (url, data) => axiosBase.post(url, data, { headers: { Authorization: `Bearer ${token}` } }),
+  put: (url, data) => axiosBase.put(url, data, { headers: { Authorization: `Bearer ${token}` } }),
+  del: (url) => axiosBase.delete(url, { headers: { Authorization: `Bearer ${token}` } }),
+});
 
 // the timeAgo function to display time in "time ago" format
 const timeAgo = (date) => {
