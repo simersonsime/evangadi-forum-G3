@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import styles from "./Login.module.css"; // <- updated
+import { useNavigate } from "react-router-dom";
+import styles from "./Login.module.css"; 
 import axios from "axios";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,6 +20,8 @@ const ForgotPassword = () => {
         { email }
       );
       setMessage(res.data.message);
+      setTimeout(() => navigate("/reset-password"), 1000);
+      // redirect to reset password page
     } catch (err) {
       setError(err.response?.data?.message || "Server error");
     }

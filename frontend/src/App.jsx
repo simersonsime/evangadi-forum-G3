@@ -39,15 +39,13 @@ import SharedLayout from "./components/SharedLayout/SharedLayout";
 import Landing from "./pages/Landing/Landing";
 import Home from "./Pages/Home/Home"; //
 import AskQuestion from "./pages/AskQuestion/AskQuestion";
-// import api from "./Api/axios";
-// import ForgotPassword from "./components/ForgotRassword/ForgotRassword.jsx"
 import Answer from "./pages/Answer/Answer";
-// import Question from "./pages/Question/Question";
 import NotFound from "./Pages/NotFound/NotFound";
 import About from "./components/About/About";
-import Signup from "./components/Signup/Signup";
+// import Signup from "./components/Signup/Signup";
 import ForgotPassword from "./components/Login/ForgotPassword";
 import ResetPassword from "./components/Login/ResetPassword";
+// import Login from "./components/Login/Login";
 
 function App() {
   return (
@@ -59,12 +57,9 @@ function App() {
           <Route path="how-it-works" element={<About />} />
           <Route path="ask-question" element={<AskQuestion />} />
           <Route path="answer/:id" element={<Answer />} />
-          <Route path="login" element={<Login />} />
-          <Route path="signup" element={<Signup />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="reset-password" element={<ResetPassword />} />
           <Route path="answer/:question_id" element={<Answer />} />
-          {/* <Route path="forgot-password" element={<ForgotPassword />} /> */}
           <Route path="*" element={<NotFound />} />
           
         </Route>
