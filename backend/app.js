@@ -1,5 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 // Import routes
 import authRoutes from "./routes/authRoutes.js";
 import questionRoutes from "./routes/questionRoutes.js";
@@ -11,6 +12,7 @@ import passwordRoutes from "./routes/passwordRoutes.js";
 
 dotenv.config();
 const app = express();
+app.use(cors());
 
 // -----------Middleware------------//
 app.use(express.json()); // Parse JSON bodies

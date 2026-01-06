@@ -1,134 +1,108 @@
-import React, { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import  api  from "../../Api/axios";
+import api from "../../Api/axios";
 import { useAuth } from "../../context/AuthContext";
-import classes from "./Login.module.css";
-import { FaEye } from "react-icons/fa";
-import { FaEyeSlash } from "react-icons/fa6";
+import styles from "../Login/Login.module.css";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
-function Login({ toggleForm }) {
+const Login = ({ switchToSignup }) => {
+  const emailRef = useRef();
+  const passwordRef = useRef();
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [loading, setLoading] = useState(false);
-  const passwordVisibility = () => {
-    setShowPassword(!showPassword);
-  }
-  async function handleSubmit(e) {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const email = emailRef.current?.value.trim();
+    const password = passwordRef.current?.value;
+
     if (!email || !password) {
-      setErrorMessage("Please provide all required information");
+      setError("Both email and password are required.");
       return;
     }
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      setErrorMessage("Please enter a valid email address");
-      return;
-    }
-
-    setLoading(true);
-    setErrorMessage(null);
 
     try {
-      const { data } = await api.post("/users/login", {
-        email,
-        password,
-      });
+      const { data } = await api.post(
+        "/user/login",
+        { email, password },
+        { headers: { "Content-Type": "application/json" } } // explicit
+      );
 
-      login(data.token, { username: data.username });
-      navigate("/");
-    } catch (error) {
-      console.log(error)
-      setErrorMessage("Login failed.");
-    } finally {
-      setLoading(false);
+      // login saves token and user to global state (and localStorage)
+      login(data.token, data.user);
+
+      // clear inputs
+      emailRef.current.value = "";
+      passwordRef.current.value = "";
+      setTimeout(() => navigate("/home"), 500);
+      // redirect to homepage
+    } catch (err) {
+      console.error("Login error:", err.response?.data?.message);
+      setError(
+        err.response?.data?.message || "Login failed. Please check credentials."
+      );
     }
-  }
-
-  const handleCreateAccountClick = () => {
-    navigate('/signup');
   };
 
   return (
-    <section className={classes.Login_Wrapper}>
-      <div className={classes.centered_container}>
-        <div className={`${classes.login_box}`}>
-          <h5>Login to Your Account</h5>
-          <br />
-          <h6>
-            Don’t have an account?{" "}
+    <div className={styles.loginWrapper}>
+      <div className={styles.loginCard}>
+        <h2 className={styles.title}>Login to your account</h2>
+
+        <p className={styles.subtitle}>
+          Don&apos;t have an account?
+          <span className={styles.inlineLink} onClick={switchToSignup}>
+            Create a new account
+          </span>
+        </p>
+
+        <form className={styles.form} onSubmit={handleSubmit}>
+          {error && <div className={styles.error}>{error}</div>}
+
+          {/* Email Field */}
+          <input
+            ref={emailRef}
+            type="email"
+            placeholder="Your Email"
+            className={styles.input}
+          />
+
+          {/* Pasword Field */}
+          <div className={styles.passwordWrapper}>
+            <input
+              ref={passwordRef}
+              type={showPassword ? "text" : "password"}
+              placeholder="********"
+              className={styles.input}
+            />
             <span
-              className={classes.create}
-              role="button"
-              onClick={handleCreateAccountClick}
-            >
-              Create a new account
+              className={styles.eyeIcon}
+              onClick={() => setShowPassword(!showPassword)}>
+              {showPassword ? <FiEyeOff /> : <FiEye />}
             </span>
-          </h6>
-          <br />
-          {errorMessage && (
-            <p style={{ marginBottom: "20px", color: "red" }}>{errorMessage}</p>
-          )}
-          <form onSubmit={handleSubmit}>
-            <div className={`${classes.formGroup}`}>
-              <input
-                id="email"
-                type="email"
-                placeholder="Email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className={classes.input}
-                required
-              />
-            </div>
-            <div className={`${classes.formGroup}`}>
-              <input
-                id="password"
-                type={showPassword ? "text" : "password"}
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className={classes.input}
-                required
-              />
-              <span className={classes.eyes} onClick={passwordVisibility}>
-                {showPassword ? (
-                  <FaEye className={classes.activeEye} size={20} />
-                ) : (
-                  <FaEyeSlash size={20} />
-                )}
-              </span>
-            </div>
-            <Link to="/forgot-password" className={classes.forgotPasswordLink}>
+          </div>
+
+          {/* Forgot password */}
+          <div className={styles.forgotWrapper}>
+            <Link to="/forgot-password" className={styles.forgotLink}>
               Forgot password?
             </Link>
-            <button
-              type="submit"
-              className={`${classes.loginButton}`}
-              disabled={loading}
-            >
-              {loading ? "Logging in..." : "LOGIN"}
-            </button>
-          </form>
-          <p className={classes.register_link}>
-            {/* Don't have an account?{" "} */}
-            {/* <span
-              className={classes.highlightText}
-              role="button"
-              onClick={toggleForm}
-            >
-              Create a new account
-            </span> */}
-          </p>
-        </div>
+          </div>
+          <button type="submit" className={styles.submitBtn}>
+            submit
+          </button>
+        </form>
+
+        <p className={styles.bottomLink} onClick={switchToSignup}>
+          Create an account?
+        </p>
       </div>
-    </section>
+    </div>
   );
-}
+};
 
 export default Login;
