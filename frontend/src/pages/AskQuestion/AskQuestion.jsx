@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styles from "./AskQuestion.module.css";
-import {api} from "../../Api/axios"
+import api from "../../Api/axios"
 import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
 

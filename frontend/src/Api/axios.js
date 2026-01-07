@@ -1,6 +1,5 @@
 import axios from "axios";
-
-export const api = axios.create({
+const api = axios.create({
   baseURL: "http://localhost:4000/api",
   withCredentials: false, // true ONLY if using cookies
 });
@@ -22,3 +21,4 @@ api.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+export default api;
