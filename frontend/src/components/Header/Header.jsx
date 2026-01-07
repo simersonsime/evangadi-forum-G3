@@ -1,26 +1,41 @@
-import React from "react";
 import { Link } from "react-router-dom";
-import { Outlet } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import styles from "./Header.module.css";
 
 const Header = () => {
-  return (
-    <div>
-      {/* Simple header with page links */}
-      <header style={{ padding: "10px", background: "#eee" }}>
-        <nav>
-          <Link to="/">Landing</Link> | <Link to="/home">Home</Link> |{" "}
-          <Link to="/question/1">Question</Link> |{" "}
-          <Link to="/ask-question">Ask Question</Link> |{" "}
-          <Link to="/answer/1">Answer</Link> | <Link to="/login">Login</Link> |{" "}
-          <Link to="/signup">Signup</Link>
-        </nav>
-      </header>
+  const { isLoggedIn, logout } = useAuth();
 
-      {/* Page content will be rendered here */}
-      <main style={{ padding: "20px" }}>
-        <Outlet />
-      </main>
-    </div>
+  return (
+    <header className={styles.header}>
+      <div className={styles.container}>
+        {/* Logo */}
+        <Link to="/" className={styles.logo}>
+          <span className={styles.logoPrimary}>EVANGADI</span>
+        </Link>
+
+        {/* Navigation */}
+        <nav className={styles.nav}>
+          <Link to="/home" className={styles.navLink}>
+            Home
+          </Link>
+
+          <Link to="/how-it-works" className={styles.navLink}>
+            How it Works
+          </Link>
+
+          {/* Login / Logout */}
+          {isLoggedIn ? (
+            <button onClick={logout} className={styles.logoutBtn}>
+              LOG OUT
+            </button>
+          ) : (
+            <Link to="/" className={styles.signInBtn}>
+              SIGN IN
+            </Link>
+          )}
+        </nav>
+      </div>
+    </header>
   );
 };
 
