@@ -12,6 +12,7 @@ const Header = () => {
           <Link to="/question/1">Question</Link> |{" "}
           <Link to="/ask-question">Ask Question</Link> |{" "}
           <Link to="/answer/1">Answer</Link> | <Link to="/login">Login</Link> |{" "}
+          <Link to="/signup">Signup</Link>
         </nav>
       </header>
 
