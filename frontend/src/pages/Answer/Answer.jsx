@@ -142,7 +142,6 @@ const Answer = () => {
   };
 
   if (loading) return <div className="loading">Loading...</div>;
-  console.log("user:", user?.id, "answer owner:", answers.user_id);
 
   return (
     <div className="answer">

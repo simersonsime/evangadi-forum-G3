@@ -1,54 +1,59 @@
-.about {
+body {
+  background-color: #f7f7f7;
+}
+.container {
+  width: 100%;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 80px 10%;
-  gap: 40px;
-  background-color: #fff8f4;
+  margin: 1rem;
+  padding-top: 2rem;
+  max-width: 520px;
 }
 
-.content {
-  max-width: 550px;
+.subTitle {
+  color: #f79f1f;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0;
 }
 
-.label {
-  color: #ff6a00;
-  font-size: 14px;
-  font-weight: bold;
-  text-transform: uppercase;
-}
-
-.content h1 {
-  font-size: 36px;
-  margin: 10px 0 20px;
+.title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.45rem;
   color: #222;
 }
 
-.content p {
-  font-size: 16px;
+.text {
+  font-size: 0.95rem;
   line-height: 1.6;
   color: #555;
-  margin-bottom: 15px;
+  margin-bottom: 0.45rem;
 }
 
-.btn {
-  margin-top: 20px;
-  background-color: #ff6a00;
-  color: white;
+.button {
+  margin-top: 1.5rem;
+  padding: 0.5rem 1.5rem;
   border: none;
-  padding: 12px 24px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.btn:hover {
-  background-color: #e65c00;
-}
-
-.image img {
-  max-width: 300px;
-  width: 100%;
   border-radius: 6px;
+  background-color: #f47b20;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #e06f1c;
+}
+@media (max-width: 768px) {
+  .about {
+    flex-direction: column;
+    padding: 40px 5%;
+    text-align: center;
+  }
+
+  .image {
+    margin-top: 30px;
+  }
 }
