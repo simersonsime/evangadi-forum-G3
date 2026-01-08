@@ -30,7 +30,7 @@ const CommentBox = ({ answerid }) => {
       const data = await response.json();
       setComments(data.comments || []);
     } catch (error) {
-      console.log("Couldn't load comments");
+      console.log("Couldn't load comments", error);
     }
   };
 
@@ -110,7 +110,7 @@ const CommentBox = ({ answerid }) => {
         );
       }
     } catch (error) {
-      console.log("Error deleting comment");
+      console.log("Error deleting comment",  error);
     }
   };
 

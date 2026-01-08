@@ -74,6 +74,8 @@ const ResetPassword = () => {
 
       localStorage.setItem("otpStartTime", Date.now());
       setMessage(res.data.message);
+      setTimeout(() => navigate("/"), 1000);
+      // redirect to landing page
     } catch (err) {
       setError(err.response?.data?.message || "Server error");
     }

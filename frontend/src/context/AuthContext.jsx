@@ -11,7 +11,10 @@ export const AuthProvider = ({ children }) => {
   // Store token and user in state
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
-  const [loading, setLoading] = useState(true); // check localStorage on mount
+  const [loading, setLoading] = useState(true);
+
+  // ✅ CORRECT PLACEMENT: Define isLoggedIn inside the component
+  const isLoggedIn = !!token;
 
   // On mount, load from localStorage
   useEffect(() => {
@@ -29,22 +32,32 @@ export const AuthProvider = ({ children }) => {
   const login = (newToken, newUser) => {
     setToken(newToken);
     setUser(newUser);
-
     localStorage.setItem("token", newToken);
     localStorage.setItem("user", JSON.stringify(newUser));
   };
 
-  // Logout function — clear state + localStorage
+  // ✅ UPDATED: Logout function with redirect
   const logout = () => {
     setToken(null);
     setUser(null);
-
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+
+    // Redirect to login page
+    window.location.href = "/login"; // or "/" if your login is on home page
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, loading }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        token,
+        isLoggedIn,
+        login,
+        logout,
+        loading,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
