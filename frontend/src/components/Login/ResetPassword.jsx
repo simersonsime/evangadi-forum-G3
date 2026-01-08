@@ -1,27 +1,78 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";   
-import styles from "./Login.module.css"; 
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import styles from "./Password.module.css";
+
+const OTP_EXPIRY = 10 * 60; // 10 minutes in seconds
 
 const ResetPassword = () => {
-  const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-   const navigate = useNavigate();
+  const [timeLeft, setTimeLeft] = useState(0);
+
+  const navigate = useNavigate();
+  const email = localStorage.getItem("resetEmail");
+  const otpStartTime = localStorage.getItem("otpStartTime");
+
+  // block direct access
+  useEffect(() => {
+    if (!email || !otpStartTime) {
+      navigate("/forgot-password");
+    }
+  }, [email, otpStartTime, navigate]);
+
+  // countdown timer
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const elapsed = Math.floor((Date.now() - otpStartTime) / 1000);
+      const remaining = OTP_EXPIRY - elapsed;
+      setTimeLeft(remaining > 0 ? remaining : 0);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [otpStartTime]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setMessage("");
     setError("");
+    setMessage("");
+
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
 
     try {
-      const res = await axios.post("http://localhost:4000/api/auth/reset-password", {
-        email,
-        otp,
-        password,
-      });
+      const res = await axios.post(
+        "http://localhost:4000/api/auth/reset-password",
+        { email, otp, password }
+      );
+
+      setMessage(res.data.message);
+
+      localStorage.removeItem("resetEmail");
+      localStorage.removeItem("otpStartTime");
+
+      setTimeout(() => navigate("/login"), 2000);
+    } catch (err) {
+      setError(err.response?.data?.message || "Server error");
+    }
+  };
+
+  const handleResend = async () => {
+    setError("");
+    setMessage("");
+
+    try {
+      const res = await axios.post(
+        "http://localhost:4000/api/auth/forgot-password",
+        { email }
+      );
+
+      localStorage.setItem("otpStartTime", Date.now());
       setMessage(res.data.message);
       setTimeout(() => navigate("/"), 1000);
       // redirect to landing page
@@ -30,51 +81,62 @@ const ResetPassword = () => {
     }
   };
 
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+
   return (
-    <div className={styles.Login_Wrapper}>
-      <div className={styles.centered_container}>
-        <div className={styles.login_box}>
-          <h5>Reset Password</h5>
-          <form onSubmit={handleSubmit}>
-            <div className={styles.formGroup}>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className={styles.input}
-                required
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <input
-                type="text"
-                placeholder="Enter OTP"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
-                className={styles.input}
-                required
-              />
-            </div>
-            <div className={styles.formGroup}>
-              <input
-                type="password"
-                placeholder="New password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className={styles.input}
-                required
-              />
-            </div>
-            <button type="submit" className={styles.loginButton}>
-              Reset Password
-            </button>
-          </form>
-          {message && <p className={styles.errorMessage} style={{ color: "green" }}>{message}</p>}
-          {error && <p className={styles.errorMessage}>{error}</p>}
-        </div>
+    <section className={styles.wrapper}>
+      <div className={styles.card}>
+        <h5>Reset Your Password</h5>
+
+        <form onSubmit={handleSubmit}>
+          <label className={styles.label}>Enter OTP</label>
+          <input
+            type="text"
+            placeholder="6-digit OTP"
+            value={otp}
+            onChange={(e) => setOtp(e.target.value)}
+            className={styles.input}
+            required
+          />
+
+          <label className={styles.label}>New Password</label>
+          <input
+            type="password"
+            placeholder="New password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className={styles.input}
+            required
+          />
+
+          <label className={styles.label}>Confirm Password</label>
+          <input
+            type="password"
+            placeholder="Confirm password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className={styles.input}
+            required
+          />
+
+          <button className={styles.button}>Reset Password</button>
+        </form>
+
+        {timeLeft > 0 ? (
+          <p className={styles.timer}>
+            Resend OTP in {minutes}:{seconds.toString().padStart(2, "0")}
+          </p>
+        ) : (
+          <button onClick={handleResend} className={styles.linkBtn}>
+            Resend OTP
+          </button>
+        )}
+
+        {message && <p className={styles.success}>{message}</p>}
+        {error && <p className={styles.error}>{error}</p>}
       </div>
-    </div>
+    </section>
   );
 };
 
