@@ -33,6 +33,7 @@
 import React from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Howitworks from "./pages/Howitworks/Howitworks";
 
 import { Routes, Route } from "react-router-dom";
 import SharedLayout from "./components/SharedLayout/SharedLayout";
@@ -42,10 +43,8 @@ import AskQuestion from "./pages/AskQuestion/AskQuestion";
 import Answer from "./pages/Answer/Answer";
 import NotFound from "./Pages/NotFound/NotFound";
 import About from "./components/About/About";
-// import Signup from "./components/Signup/Signup";
 import ForgotPassword from "./components/Login/ForgotPassword";
 import ResetPassword from "./components/Login/ResetPassword";
-// import Login from "./components/Login/Login";
 
 function App() {
   return (
@@ -53,15 +52,14 @@ function App() {
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Landing />} />
-          <Route path="home" element={<Home />} />
-          <Route path="how-it-works" element={<About />} />
+          <Route path="home" element={<Landing />} />
           <Route path="ask-question" element={<AskQuestion />} />
           <Route path="answer/:id" element={<Answer />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="reset-password" element={<ResetPassword />} />
           <Route path="answer/:question_id" element={<Answer />} />
           <Route path="*" element={<NotFound />} />
-          
+          <Route path="how-it-works" element={<Howitworks />} />
         </Route>
       </Routes>
 
