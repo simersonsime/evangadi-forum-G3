@@ -1,5 +1,4 @@
-/* ========Layout Wrappers====== */
-/* Center the signup card in the page */
+/* ============ Signup Component Styles =========== */
 .signupWrapper {
   display: flex;
   align-items: center;
@@ -10,7 +9,7 @@
 /* Signup card container */
 .signupCard {
   width: 100%;
-  max-width: 400px;
+  max-width: 500px;
   background: #ffffff;
   padding: 1rem 2rem;
   margin: 2rem;
@@ -92,7 +91,6 @@
   text-decoration: underline;
 }
 
-/* ============== Form & Inputs ======== */
 /* Form container */
 .form {
   display: flex;
