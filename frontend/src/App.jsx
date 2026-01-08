@@ -52,8 +52,7 @@ function App() {
       <Routes>
         <Route path="/" element={<SharedLayout />}>
           <Route index element={<Landing />} />
-          <Route path="home" element={<Home />} />
-          <Route path="how-it-works" element={<About />} />
+          <Route path="home" element={<Landing />} />
           <Route path="ask-question" element={<AskQuestion />} />
           <Route path="answer/:id" element={<Answer />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
