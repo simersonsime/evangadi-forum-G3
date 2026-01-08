@@ -45,6 +45,7 @@ import Answer from "./pages/Answer/Answer";
 // import Question from "./pages/Question/Question";
 import NotFound from "./Pages/NotFound/NotFound";
 import About from "./components/About/About";
+import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
 import ForgotPassword from "./components/Login/ForgotPassword";
 import ResetPassword from "./components/Login/ResetPassword";
