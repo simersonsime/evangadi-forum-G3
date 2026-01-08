@@ -7,9 +7,6 @@ import questionRoutes from "./routes/questionRoutes.js";
 import answerRoutes from "./routes/answerRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
 import passwordRoutes from "./routes/passwordRoutes.js";
-
-
-
 dotenv.config();
 const app = express();
 app.use(cors());
