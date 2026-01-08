@@ -126,6 +126,27 @@
     color: #ff8500;
   }
   
+  /* Existing styles... */
+
+/* Logout Button Styles */
+.logoutBtn {
+   text-decoration: none;
+    background-color: #516cf0;
+    color: #ffffff;
+    padding: 8px 18px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.logoutBtn:hover {
+  background-color: #4058c8;
+}
+
+.logoutBtn:active {
+  transform: translateY(0);
+}
   /* Sign In Button */
   .signInBtn {
     text-decoration: none;
