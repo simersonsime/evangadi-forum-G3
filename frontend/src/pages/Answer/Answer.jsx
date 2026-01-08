@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import "./Answer.css";
-import api from "../../api/axios";
+import api from "../../Api/axios";
 import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
 

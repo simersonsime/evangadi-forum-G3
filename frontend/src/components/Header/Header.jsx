@@ -8,7 +8,7 @@ const Header = () => {
       {/* Simple header with page links */}
       <header style={{ padding: "10px", background: "#eee" }}>
         <nav>
-          <Link to="/">Landing</Link> | <Link to="/home">Home</Link> |{" "}
+           <Link to="/home">Home</Link> |{" "}
           <Link to="/question/1">Question</Link> |{" "}
           <Link to="/ask-question">Ask Question</Link> |{" "}
           <Link to="/answer/1">Answer</Link> | <Link to="/login">Login</Link> |{" "}

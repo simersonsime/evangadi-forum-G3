@@ -16,9 +16,9 @@ function Question() {
   const { user } = useContext(UserState);
 
   // Fetch questions from API
-  useEffect(() => {
-    setLoading(true);
-    axiosInstance.get("/question").then((res) => {
+  useEffect(() => { 
+    // setLoading(true);
+    api.get("/question").then((res) => {
       setQuestions(res.data.message); // Set questions from API response
       setLoading(false);
     });

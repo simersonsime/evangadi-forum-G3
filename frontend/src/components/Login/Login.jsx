@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import  api  from "../../Api/axios";
+import api from "../../Api/axios";
 import { useAuth } from "../../context/AuthContext";
 import classes from "./Login.module.css";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa6";
 
-function Login({ toggleForm }) {
+function Login() {
   const navigate = useNavigate();
   const { login } = useAuth();
   const [email, setEmail] = useState("");
@@ -16,7 +16,7 @@ function Login({ toggleForm }) {
   const [loading, setLoading] = useState(false);
   const passwordVisibility = () => {
     setShowPassword(!showPassword);
-  }
+  };
   async function handleSubmit(e) {
     e.preventDefault();
 
@@ -43,7 +43,7 @@ function Login({ toggleForm }) {
       login(data.token, { username: data.username });
       navigate("/");
     } catch (error) {
-      console.log(error)
+      console.log(error);
       setErrorMessage("Login failed.");
     } finally {
       setLoading(false);
@@ -51,7 +51,7 @@ function Login({ toggleForm }) {
   }
 
   const handleCreateAccountClick = () => {
-    navigate('/signup');
+    navigate("/signup");
   };
 
   return (
