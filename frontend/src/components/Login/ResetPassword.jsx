@@ -56,7 +56,7 @@ const ResetPassword = () => {
       localStorage.removeItem("resetEmail");
       localStorage.removeItem("otpStartTime");
 
-      setTimeout(() => navigate("/login"), 2000);
+      setTimeout(() => navigate("/"), 2000);
     } catch (err) {
       setError(err.response?.data?.message || "Server error");
     }

@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // ✅ CORRECT PLACEMENT: Define isLoggedIn inside the component
+  // CORRECT PLACEMENT: Define isLoggedIn inside the component
   const isLoggedIn = !!token;
 
   // On mount, load from localStorage
@@ -36,7 +36,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(newUser));
   };
 
-  // ✅ UPDATED: Logout function with redirect
+  // UPDATED: Logout function with redirect
   const logout = () => {
     setToken(null);
     setUser(null);

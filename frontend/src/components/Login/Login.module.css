@@ -9,7 +9,7 @@
 /* Login card container */
 .loginCard {
   width: 100%;
-  max-width: 400px;
+  max-width: 540px;
   background: #ffffff;
   padding: 3rem;
   margin: 2rem;
@@ -17,8 +17,6 @@
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
   text-align: center;
 }
-
-/* =========== Text Elements ============== */
 
 /* Card title */
 .title {
@@ -56,8 +54,6 @@
   border-radius: 4px;
   font-size: 0.95rem;
 }
-
-/* ============ Form & Inputs ================ */
 
 /* Form container */
 .form {
@@ -152,4 +148,3 @@
   text-decoration: underline;
 }
 
-/* ============ Responsive Styles =======*/
