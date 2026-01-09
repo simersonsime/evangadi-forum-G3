@@ -5,7 +5,7 @@ import "./Answer.css";
 import api from "../../Api/axios";
 import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
-import CommentBox from "../../components/Comments/CommentSection"; // Import CommentBox
+import CommentBox from "../../components/Comments/CommentSection";
 
 const Answer = () => {
   const { id } = useParams();
@@ -20,7 +20,7 @@ const Answer = () => {
   // Redirect if not logged in
   useEffect(() => {
     if (!user) {
-      navigate("/landing");
+      navigate("/");
     }
   }, [user, navigate]);
 
@@ -54,29 +54,22 @@ const Answer = () => {
     try {
       await api.post(
         `/answer/${id}`,
-        {
-          answer: answerText.trim(),
-          user_id: user.id,
-        },
+        { answer: answerText.trim() },
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
           },
         }
       );
 
       toast.success("Answer posted successfully!");
+      setAnswerText("");
 
       // Refresh answers
-      if (answers.length === 0) {
-        setAnswers([""]);
-      } else {
-        setAnswers([]);
-      }
-
-      setAnswerText("");
+      const response = await api.get(`/answer/${id}`);
+      setAnswers(response.data.answers || response.data.data || []);
     } catch (err) {
+      console.error(err);
       toast.error("Failed to post answer");
     }
   };
@@ -86,14 +79,12 @@ const Answer = () => {
   return (
     <div className="answer">
       <hr />
-      <div className="answer__container">
+      <div className="question__box ">
         <h3>Question</h3>
         <h5 className="question__line mb-3">{question?.title}</h5>
         <p>{question?.description}</p>
-        <hr />
 
         <h3 className="answer__community">Answer From The Community</h3>
-        <hr />
 
         {answers &&
           answers.map((item) => (
@@ -136,8 +127,7 @@ const Answer = () => {
               rows="10"
               placeholder="Your Answer here"
               value={answerText}
-              onChange={(e) => setAnswerText(e.target.value)}
-            ></textarea>
+              onChange={(e) => setAnswerText(e.target.value)}></textarea>
 
             <br />
             <br />

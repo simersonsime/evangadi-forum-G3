@@ -1,4 +1,3 @@
-/* ============ Signup Component Styles =========== */
 .signupWrapper {
   display: flex;
   align-items: center;
@@ -25,7 +24,6 @@
   width: 100%;
 }
 
-/* =========== Text Elements======= */
 /* Card title */
 .title {
   font-size: 1.4rem;
@@ -140,7 +138,6 @@
   color: #f47b20;
 }
 
-/* ============ Buttons ========= */
 .submitBtn {
   margin-top: 0.5rem;
   padding: 0.8rem;
