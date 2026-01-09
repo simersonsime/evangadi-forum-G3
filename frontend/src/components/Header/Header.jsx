@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import logo from "../../assets/images/evangadi-logo-home.png";
 import styles from "./Header.module.css";
 
 const Header = () => {
@@ -10,7 +11,7 @@ const Header = () => {
       <div className={styles.container}>
         {/* Logo */}
         <Link to="/" className={styles.logo}>
-          <span className={styles.logoPrimary}>EVANGADI</span>
+          <img src={logo} alt="Evangadi Logo" />
         </Link>
 
         {/* Navigation */}

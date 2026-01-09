@@ -20,7 +20,7 @@ const Home = () => {
 
   // Redirect if not logged in
   useEffect(() => {
-    if (!user) navigate("/landing");
+    if (!user) navigate("/");
   }, [user, navigate]);
 
   // Fetch questions

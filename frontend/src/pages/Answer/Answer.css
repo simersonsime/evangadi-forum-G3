@@ -49,6 +49,29 @@
   margin: 0px;
 }
 
+.answer__conatiner {
+  width: 75%;
+  margin-left: 150px;
+}
+.answer__conatiner h3 {
+  text-align: left;
+  font-size: 19px;
+  font-weight: 700;
+}
+.answer__conatiner h5 {
+  text-align: left;
+  margin-top: 10px;
+  font-size: 160px;
+  font-weight: 500;
+  font-family: "Courier New", Courier, monospace;
+}
+.answer__conatiner p {
+  /* margin-top: 10px; */
+  font-size: 16px;
+  font-weight: 500;
+  font-family: "Courier New", Courier, monospace;
+}
+
 .user__container {
   display: flex;
   flex-direction: column;
