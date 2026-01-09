@@ -138,3 +138,28 @@
 .form textarea:focus {
   border-color: #4f46e5;
 }
+/* Comment section styling */
+.comment-section {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+.comment-toggle-btn {
+  background: none;
+  border: none;
+  color: #0077cc;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.comment-toggle-btn:hover {
+  background-color: #f0f8ff;
+}
+
+.comment-toggle-btn:active {
+  background-color: #e6f2ff;
+}
