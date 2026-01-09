@@ -35,7 +35,7 @@ export const getAllQuestions = async (req, res) => {
  */
 export const getQuestionById = async (req, res) => {
   const { question_id } = req.params;
-console.log(params);
+console.log(req.params);
   const questionIdNum = parseInt(question_id, 10);
   if (isNaN(questionIdNum)) {
     return res
