@@ -8,7 +8,16 @@ import db from "../config/database.js";
 export const getAllQuestions = async (req, res) => {
   try {
     // 1. Fetch all questions from the database
-    const [rows] = await db.promise().query("SELECT * FROM questions");
+   const [rows] = await db.promise().query(`
+  SELECT 
+    q.*,
+    u.username,
+    u.first_name,
+    u.last_name
+  FROM questions q
+  LEFT JOIN users u ON q.user_id = u.user_id
+  ORDER BY q.created_at DESC
+`);
 
     // 2. Check if question exists
     if (rows.length === 0) {

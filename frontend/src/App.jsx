@@ -1,40 +1,6 @@
-// import React, { createContext, useState } from "react";
-// import { Routes, Route } from "react-router-dom";
-// import SharedLayout from "./components/SharedLayout/SharedLayout";
-// import Landing from "./pages/Landing/Landing";
-// import Home from "./pages/Home/Home";
-// import Question from "./pages/Question/Question";
-// import AskQuestion from "./pages/AskQuestion/AskQuestion";
-// import Answer from "./pages/Answer/Answer";
-// import NotFound from "./pages/NotFound/NotFound";
-
-// // export const UserState = createContext();
-
-// function App() {
-//   // const [user, setUser] = useState(null); // placeholder user state
-//   return (
-//     // <UserState.Provider value={{ user, setUser }}>
-//       <Routes>
-//         <Route path="/" element={<SharedLayout />}>
-//           <Route index element={<Landing />} />
-//           <Route path="home" element={<Home />} />
-//           <Route path="question/:id" element={<Question />} />
-//           <Route path="ask-question" element={<AskQuestion />} />
-//           <Route path="answer/:id" element={<Answer />} />
-//           <Route path="*" element={<NotFound />} />
-//         </Route>
-//       </Routes>
-//     {/* </UserState.Provider> */}
-//   );
-// }
-
-// export default App;
-
 import React from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Howitworks from "./pages/Howitworks/Howitworks";
-
 import { Routes, Route } from "react-router-dom";
 import SharedLayout from "./components/SharedLayout/SharedLayout";
 import Landing from "./pages/Landing/Landing";
@@ -67,9 +33,9 @@ function App() {
 
           <Route path="*" element={<NotFound />} />
           <Route path="how-it-works" element={<Howitworks />} />
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
-
       {/*  Toast system */}
       <ToastContainer position="top-center" autoClose={1500} />
     </>

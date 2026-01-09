@@ -43,7 +43,7 @@ const Login = ({ switchToSignup }) => {
       // login saves token and user to global state (and localStorage)
       login(data.token, data.user);
 
-      // ✅ IMMEDIATE LOCALSTORAGE CHECK
+      //  IMMEDIATE LOCALSTORAGE CHECK
       console.log("6. Checking localStorage:");
       console.log("- Token:", localStorage.getItem("token"));
       console.log("- User:", localStorage.getItem("user"));
@@ -52,7 +52,7 @@ const Login = ({ switchToSignup }) => {
       emailRef.current.value = "";
       passwordRef.current.value = "";
 
-      // ✅ IMMEDIATE REDIRECT
+      //  IMMEDIATE REDIRECT
       console.log("7. Redirecting to /home");
       navigate("/home");
       // OR force refresh: window.location.href = "/home";

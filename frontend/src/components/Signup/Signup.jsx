@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
-import { data, Link, useNavigate } from "react-router-dom";
-// import axios from "axios";
+import { data, useNavigate } from "react-router-dom";
 import api from "../../Api/axios";
 import styles from "./Signup.module.css";
 import { FiEye, FiEyeOff } from "react-icons/fi";
