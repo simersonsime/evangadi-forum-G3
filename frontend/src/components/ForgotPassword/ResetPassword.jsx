@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../Api/axios";
 import styles from "./Password.module.css";
 
-const OTP_EXPIRY = 10 * 60; // 10 minutes in seconds
+const OTP_EXPIRY = 10 * 60; // 10 minutes
 
 const ResetPassword = () => {
   const [otp, setOtp] = useState("");
@@ -17,14 +17,14 @@ const ResetPassword = () => {
   const email = localStorage.getItem("resetEmail");
   const otpStartTime = localStorage.getItem("otpStartTime");
 
-  // block direct access
+  // Prevent direct access
   useEffect(() => {
     if (!email || !otpStartTime) {
       navigate("/forgot-password");
     }
   }, [email, otpStartTime, navigate]);
 
-  // countdown timer
+  // Countdown timer
   useEffect(() => {
     const interval = setInterval(() => {
       const elapsed = Math.floor((Date.now() - otpStartTime) / 1000);
@@ -46,17 +46,18 @@ const ResetPassword = () => {
     }
 
     try {
-      const res = await axios.post(
-        "http://localhost:4000/api/auth/reset-password",
-        { email, otp, password }
-      );
+      const res = await api.post("/auth/reset-password", {
+        email,
+        otp,
+        password,
+      });
 
       setMessage(res.data.message);
 
       localStorage.removeItem("resetEmail");
       localStorage.removeItem("otpStartTime");
 
-      setTimeout(() => navigate("/login"), 2000);
+      setTimeout(() => navigate("/"), 2000);
     } catch (err) {
       setError(err.response?.data?.message || "Server error");
     }
@@ -67,15 +68,10 @@ const ResetPassword = () => {
     setMessage("");
 
     try {
-      const res = await axios.post(
-        "http://localhost:4000/api/auth/forgot-password",
-        { email }
-      );
+      const res = await api.post("/auth/forgot-password", { email });
 
       localStorage.setItem("otpStartTime", Date.now());
       setMessage(res.data.message);
-      setTimeout(() => navigate("/"), 1000);
-      // redirect to landing page
     } catch (err) {
       setError(err.response?.data?.message || "Server error");
     }
@@ -93,7 +89,6 @@ const ResetPassword = () => {
           <label className={styles.label}>Enter OTP</label>
           <input
             type="text"
-            placeholder="6-digit OTP"
             value={otp}
             onChange={(e) => setOtp(e.target.value)}
             className={styles.input}
@@ -103,7 +98,6 @@ const ResetPassword = () => {
           <label className={styles.label}>New Password</label>
           <input
             type="password"
-            placeholder="New password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className={styles.input}
@@ -113,7 +107,6 @@ const ResetPassword = () => {
           <label className={styles.label}>Confirm Password</label>
           <input
             type="password"
-            placeholder="Confirm password"
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             className={styles.input}
@@ -128,7 +121,7 @@ const ResetPassword = () => {
             Resend OTP in {minutes}:{seconds.toString().padStart(2, "0")}
           </p>
         ) : (
-          <button onClick={handleResend} className={styles.linkBtn}>
+          <button className={styles.linkBtn} onClick={handleResend}>
             Resend OTP
           </button>
         )}
