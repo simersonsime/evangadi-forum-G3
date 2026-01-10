@@ -8,9 +8,12 @@ import Home from "./Pages/Home/Home"; //
 import AskQuestion from "./pages/AskQuestion/AskQuestion";
 import Answer from "./pages/Answer/Answer";
 import NotFound from "./Pages/NotFound/NotFound";
-import ForgotPassword from "./components/Login/ForgotPassword";
-import ResetPassword from "./components/Login/ResetPassword";
-import Howitworks from "./pages/Howitworks/Howitworks";
+import About from "./components/About/About";
+import Login from "./components/Login/Login";
+import Signup from "./components/Signup/Signup";
+import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
+import ResetPassword from "./components/ForgotPassword/ResetPassword";
+
 
 function App() {
   return (
@@ -24,6 +27,11 @@ function App() {
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="reset-password" element={<ResetPassword />} />
           <Route path="answer/:question_id" element={<Answer />} />
+          <Route path="login" element={<Login />} />
+          <Route path="signup" element={<Signup />} />
+          
+
+          <Route path="*" element={<NotFound />} />
           <Route path="how-it-works" element={<Howitworks />} />
           <Route path="*" element={<NotFound />} />
         </Route>

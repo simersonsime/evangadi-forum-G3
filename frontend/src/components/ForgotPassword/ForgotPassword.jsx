@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import api from "../../Api/axios";
 import styles from "./Password.module.css";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -15,12 +16,8 @@ const ForgotPassword = () => {
     setMessage("");
 
     try {
-      const res = await axios.post(
-        "http://localhost:4000/api/auth/forgot-password",
-        { email }
-      );
+      const res = await api.post("/auth/forgot-password", { email });
 
-      // store email + OTP start time
       localStorage.setItem("resetEmail", email);
       localStorage.setItem("otpStartTime", Date.now());
 
@@ -48,6 +45,7 @@ const ForgotPassword = () => {
             className={styles.input}
             required
           />
+
           <button className={styles.button}>Send OTP</button>
         </form>
 
