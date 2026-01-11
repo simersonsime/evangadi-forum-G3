@@ -13,6 +13,8 @@ import Login from "./components/Login/Login";
 import Signup from "./components/Signup/Signup";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/ForgotPassword/ResetPassword";
+import Howitworks from "./pages/Howitworks/Howitworks";
+
 
 
 function App() {
