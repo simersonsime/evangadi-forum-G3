@@ -8,16 +8,24 @@ import db from "../config/database.js";
 export const getAllQuestions = async (req, res) => {
   try {
     // 1. Fetch all questions from the database
-    const [rows] = await db.promise().query("SELECT * FROM questions");
+   const [rows] = await db.promise().query(`
+  SELECT 
+    q.*,
+    u.username,
+    u.first_name,
+    u.last_name
+  FROM questions q
+  LEFT JOIN users u ON q.user_id = u.user_id
+  ORDER BY q.created_at DESC
+`);
 
     // 2. Check if question exists
     if (rows.length === 0) {
-      return res.status(404).json({
-        error: "Not Found",
+      return res.status(200).json({
+        error: "No Content",
         message: "No questions found.",
       });
     }
-
     // 2. Send response
     res.status(200).json({ questions: rows });
   } catch (err) {
@@ -35,7 +43,7 @@ export const getAllQuestions = async (req, res) => {
  */
 export const getQuestionById = async (req, res) => {
   const { question_id } = req.params;
-console.log(params);
+console.log(req.params);
   const questionIdNum = parseInt(question_id, 10);
   if (isNaN(questionIdNum)) {
     return res

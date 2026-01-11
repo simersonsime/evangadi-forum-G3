@@ -5,7 +5,7 @@ import { StatusCodes } from "http-status-codes";
  * Endpoint: POST /api/answer/:question_id
  * Protected route (requires JWT)
  */
- 
+
 export const postAnswer = async (req, res) => {
   const { question_id } = req.params;
   let { answer } = req.body;
@@ -68,19 +68,18 @@ export const postAnswer = async (req, res) => {
     });
   }
 };
+
 // Get all answers for a specific question
-// Get all answers for a specific question - FIXED
-// Get all answers for a specific question - FINAL FIXED VERSION
 export const getAllAnswer = async (req, res) => {
-  const questionId = req.params.question_id;
-  
-  console.log("GET /answer/:question_id called for question:", questionId);
+  const question_id = req.params.question_id;
+
+  console.log("GET /answer/:question_id called for question:", question_id);
 
   try {
     const [results] = await db.promise().query(
       `SELECT 
         a.answer_id,
-        a.answer_body,
+        a.answer,
         u.username,
         u.user_id,
         u.first_name,
@@ -91,7 +90,7 @@ export const getAllAnswer = async (req, res) => {
       JOIN users u ON a.user_id = u.user_id
       WHERE a.question_id = ?
       ORDER BY a.created_at ASC`,
-      [questionId]
+      [question_id]
     );
 
     // Handle case where no answers are found
@@ -99,21 +98,21 @@ export const getAllAnswer = async (req, res) => {
       return res.status(200).json({
         message: "No answers found for this question",
         answers: [],
-        count: 0
+        count: 0,
       });
     }
 
-    res.status(200).json({ 
+    res.status(200).json({
       message: "Answers retrieved successfully",
       answers: results,
-      count: results.length 
+      count: results.length,
     });
   } catch (error) {
     console.error("❌ Get answers error:", error.message);
     console.error("❌ SQL Error:", error.sqlMessage);
     res.status(500).json({
       error: "Internal Server Error",
-      message: "An unexpected error occurred"
+      message: "An unexpected error occurred",
     });
   }
 };
@@ -142,9 +141,7 @@ export const deleteAnswer = async (req, res) => {
       });
     }
 
-    await db.query("DELETE FROM answers WHERE answerid = ?", [
-      answerId,
-    ]);
+    await db.query("DELETE FROM answers WHERE answerid = ?", [answerId]);
 
     res.status(StatusCodes.OK).json({ msg: "Answer deleted successfully" });
   } catch (error) {
@@ -154,7 +151,7 @@ export const deleteAnswer = async (req, res) => {
       msg: "An unexpected error occurred",
     });
   }
-}
+};
 // Vote (like/dislike) an answer
 export const voteAnswer = async (req, res) => {
   const userId = req.user.userid;
@@ -224,7 +221,7 @@ export const voteAnswer = async (req, res) => {
     console.error("Vote error:", error.message);
     return res.status(500).json({ msg: "Server error while voting" });
   }
-}
+};
 // Edit an existing answer
 export const editAnswer = async (req, res) => {
   const userId = req.user.userid; // Get the logged-in user's ID
@@ -260,10 +257,10 @@ export const editAnswer = async (req, res) => {
     }
 
     // Update the answer content
-    await db.query(
-      "UPDATE answers SET answer = ? WHERE answerid = ?",
-      [content, answerId]
-    );
+    await db.query("UPDATE answers SET answer = ? WHERE answerid = ?", [
+      content,
+      answerId,
+    ]);
 
     res.status(StatusCodes.OK).json({
       msg: "Answer updated successfully",
@@ -275,7 +272,7 @@ export const editAnswer = async (req, res) => {
       msg: "An unexpected error occurred",
     });
   }
-}
+};
 
 // Add a comment to an answer
 export const addComment = async (req, res) => {
@@ -306,7 +303,7 @@ export const addComment = async (req, res) => {
       msg: "An unexpected error occurred",
     });
   }
-}
+};
 
 // Get all comments for an answer
 export const getComments = async (req, res) => {
@@ -334,7 +331,7 @@ export const getComments = async (req, res) => {
       msg: "An unexpected error occurred",
     });
   }
-}
+};
 
 // Delete a comment
 export const deleteComment = async (req, res) => {
@@ -361,9 +358,7 @@ export const deleteComment = async (req, res) => {
       });
     }
 
-    await db.query("DELETE FROM comments WHERE commentid = ?", [
-      commentId,
-    ]);
+    await db.query("DELETE FROM comments WHERE commentid = ?", [commentId]);
 
     res.status(StatusCodes.OK).json({ msg: "Comment deleted successfully" });
   } catch (error) {
@@ -373,4 +368,4 @@ export const deleteComment = async (req, res) => {
       msg: "An unexpected error occurred",
     });
   }
-}
+};

@@ -20,7 +20,7 @@ const Home = () => {
 
   // Redirect if not logged in
   useEffect(() => {
-    if (!user) navigate("/landing");
+    if (!user) navigate("/");
   }, [user, navigate]);
 
   // Fetch questions
@@ -82,7 +82,7 @@ const Home = () => {
         </div>
 
         <div className="home__welcome">
-          <h6>Welcome: {user.name}</h6>
+          <h6>Welcome: {user?.name || user?.username || "User"}</h6>
         </div>
       </div>
 
@@ -108,14 +108,18 @@ const Home = () => {
             <div key={item.post_id}>
               <div
                 className="home__questions"
-                onClick={() => navigate(`/answer/${item.question_id}`)}>
-                <div className="home__userInfo">
-                  <FaUserCircle className="user__icon" />
-                  <div className="home__user">{item.username}</div>
+                onClick={() => navigate(`/answer/${item.question_id}`)}
+              >
+                  <div>
+                  <FaUserCircle style={{ fontSize: "60px" }} />
+                  <div className="home__user mx-3">
+                    {item.username || item.first_name || `User ${item.user_id}`}
+                  </div>
                   <span className="answerDate">
                     {formatDate(item.created_at)}
                   </span>
                 </div>
+
                 <div className="home__question">
                   {item.title || item.question}
                 </div>
