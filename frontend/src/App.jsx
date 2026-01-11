@@ -60,6 +60,8 @@ import Signup from "./components/Signup/Signup";
 import Howitworks from "./pages/HowItWorks/Howitworks";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/ForgotPassword/ResetPassword";
+import Howitworks from "./pages/Howitworks/Howitworks";
+
 
 function App() {
   return (
