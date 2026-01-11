@@ -97,7 +97,9 @@ export const postAnswer = async (req, res) => {
  * Get all answers for a specific question
  */
 export const getAllAnswer = async (req, res) => {
-  const questionId = req.params.question_id;
+  const question_id = req.params.question_id;
+
+  console.log("GET /answer/:question_id called for question:", question_id);
 
   try {
     const [results] = await db.promise().query(
@@ -114,7 +116,7 @@ export const getAllAnswer = async (req, res) => {
       JOIN users u ON a.user_id = u.user_id
       WHERE a.question_id = ?
       ORDER BY a.created_at ASC`,
-      [questionId]
+      [question_id]
     );
 
     if (results.length === 0) {

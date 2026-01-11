@@ -22,11 +22,10 @@ export const getAllQuestions = async (req, res) => {
     // 2. Check if question exists
     if (rows.length === 0) {
       return res.status(200).json({
-        error: "Not Found",
+        error: "No Content",
         message: "No questions found.",
       });
     }
-
     // 2. Send response
     res.status(200).json({ questions: rows });
   } catch (err) {
