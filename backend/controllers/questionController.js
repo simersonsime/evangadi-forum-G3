@@ -21,7 +21,7 @@ export const getAllQuestions = async (req, res) => {
 
     // 2. Check if question exists
     if (rows.length === 0) {
-      return res.status(404).json({
+      return res.status(200).json({
         error: "Not Found",
         message: "No questions found.",
       });
