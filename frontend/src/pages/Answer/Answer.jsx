@@ -9,6 +9,7 @@ import CommentBox from "../../components/Comments/CommentSection";
 
 const Answer = () => {
   const { question_id } = useParams();
+  const { answer_id } = useParams();
   const navigate = useNavigate();
   const { user, token } = useAuth();
 
@@ -39,10 +40,10 @@ const Answer = () => {
     if (!answerText.trim()) return toast.error("Answer cannot be empty");
 
     try {
+      console.log("TOKEN:", token);
       await api.post(
-        `/answer/${question_id}`,
+        `/answer/${answer_id}`,
         { answer: answerText.trim() },
-        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       toast.success("Answer posted successfully!");

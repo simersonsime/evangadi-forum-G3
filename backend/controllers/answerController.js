@@ -9,21 +9,21 @@ import { StatusCodes } from "http-status-codes";
 export const postAnswer = async (req, res) => {
   const { question_id } = req.params;
   let { answer } = req.body;
-  const user_id = req.user?.id; // Comes from JWT middleware
+  const user_id = req.user?.user_id; // Comes from JWT middleware
   // 1. Check authentication
-  if (!user_id) {
-    return res.status(401).json({
-      error: "Unauthorized",
-      message: "Authentication required",
-    });
-  }
-  // 2. Validate question_id
-  if (!question_id || isNaN(parseInt(question_id, 10))) {
-    return res.status(400).json({
-      error: "Bad Request",
-      message: "Question ID must be a valid number",
-    });
-  }
+  // if (!user_id) {
+  //   return res.status(401).json({
+  //     error: "Unauthorized",
+  //     message: "Authentication required",
+  //   });
+  // }
+  // // 2. Validate question_id
+  // if (!question_id || isNaN(parseInt(question_id, 10))) {
+  //   return res.status(400).json({
+  //     error: "Bad Request",
+  //     message: "Question ID must be a valid number",
+  //   });
+  // }
   // 3. Validate answer content
   if (!answer || answer.trim() === "") {
     return res.status(400).json({
@@ -56,14 +56,20 @@ export const postAnswer = async (req, res) => {
     res.status(201).json({
       message: "Answer posted successfully",
       answer_id: result.insertId,
-      question_id,
-      user_id,
-      answer,
+      // question_id,
+      // user_id,
+      // answer,
     });
+
+    // console.log({
+    //   question_id,
+    //   user_id,
+    //   answer,
+    // });
   } catch (err) {
     console.error("Post answer error:", err);
     res.status(500).json({
-      error: "Internal Server Error",
+      error: "Internal Server Error occured",
       message: "An unexpected error occurred",
     });
   }
@@ -111,20 +117,20 @@ export const getAllAnswer = async (req, res) => {
     console.error("❌ Get answers error:", error.message);
     console.error("❌ SQL Error:", error.sqlMessage);
     res.status(500).json({
-      error: "Internal Server Error",
+      error: "Internal Server Error occured",
       message: "An unexpected error occurred",
     });
   }
 };
 // Delete an answer
 export const deleteAnswer = async (req, res) => {
-  const userId = req.user.userid; // Get the logged-in user's ID
-  const answerId = req.params.id; // Get the answer ID from the route
+  const user_id = req.user.userid; // Get the logged-in user's ID
+  const answer_id = req.params.id; // Get the answer ID from the route
 
   try {
     const [answer] = await db.query(
-      "SELECT userid FROM answers WHERE answerid = ?",
-      [answerId]
+      "SELECT user_id FROM answers WHERE answer_id = ?",
+      [answer_id]
     );
 
     if (answer.length === 0) {
@@ -141,7 +147,7 @@ export const deleteAnswer = async (req, res) => {
       });
     }
 
-    await db.query("DELETE FROM answers WHERE answerid = ?", [answerId]);
+    await db.query("DELETE FROM answers WHERE answer_id = ?", [answer_id]);
 
     res.status(StatusCodes.OK).json({ msg: "Answer deleted successfully" });
   } catch (error) {
@@ -154,7 +160,7 @@ export const deleteAnswer = async (req, res) => {
 };
 // Vote (like/dislike) an answer
 export const voteAnswer = async (req, res) => {
-  const userId = req.user.userid;
+  const user_id = req.user.user_id;
   const answerId = req.params.id;
   const { voteType } = req.body; // "upvote" or "downvote"
 
@@ -164,8 +170,8 @@ export const voteAnswer = async (req, res) => {
 
   try {
     const [existingVote] = await db.query(
-      "SELECT vote_type FROM answer_votes WHERE userid = ? AND answerid = ?",
-      [userId, answerId]
+      "SELECT vote_type FROM answer_votes WHERE user_id = ? AND answer_id = ?",
+      [user_id, answerId]
     );
 
     if (existingVote.length > 0) {
@@ -174,14 +180,14 @@ export const voteAnswer = async (req, res) => {
       if (currentVote === voteType) {
         // User clicked the same vote again → remove it
         await db.query(
-          "DELETE FROM answer_votes WHERE userid = ? AND answerid = ?",
-          [userId, answerId]
+          "DELETE FROM answer_votes WHERE user_id = ? AND answer_id = ?",
+          [user_id, answer_id]
         );
 
         const column = voteType === "upvote" ? "likes" : "dislikes";
         await db.query(
-          `UPDATE answers SET ${column} = ${column} - 1 WHERE answerid = ?`,
-          [answerId]
+          `UPDATE answers SET ${column} = ${column} - 1 WHERE answer_id = ?`,
+          [answer_i]
         );
 
         return res.status(200).json({ msg: `${voteType} removed` });

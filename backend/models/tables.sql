@@ -32,7 +32,7 @@ CREATE TABLE questions (
 
 CREATE TABLE IF NOT EXISTS answers(
   answer_id INT AUTO_INCREMENT PRIMARY KEY,
-  answer_body TEXT NOT NULL,
+  answer TEXT NOT NULL,
   user_id INT NOT NULL,
   question_id INT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
