@@ -3,16 +3,15 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Routes, Route } from "react-router-dom";
 import SharedLayout from "./components/SharedLayout/SharedLayout";
-import Home from "./Pages/Home/Home";
-import Landing from "./pages/Landing/Landing"; 
+import Home from "./pages/Home/Home";
+import Landing from "./pages/Landing/Landing";
 import AskQuestion from "./pages/AskQuestion/AskQuestion";
 import Answer from "./pages/Answer/Answer";
 import NotFound from "./Pages/NotFound/NotFound";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
-import ResetPassword from "./components/ForgotPassword/ResetPassword"; 
+import ResetPassword from "./components/ForgotPassword/ResetPassword";
 import HowItWorks from "./pages/HowItWorks/HowItWorks";
 
- 
 function App() {
   return (
     <>

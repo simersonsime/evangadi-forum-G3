@@ -10,10 +10,8 @@ CREATE TABLE users (
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-
-    COLUMN reset_otp VARCHAR(6) NULL,
-    COLUMN reset_otp_expiry BIGINT NULL,
-
+    reset_otp VARCHAR(6) NULL,
+    reset_otp_expiry BIGINT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -30,6 +28,7 @@ CREATE TABLE questions (
         ON DELETE CASCADE
 );
 
+--  4. Answer Table
 CREATE TABLE IF NOT EXISTS answers(
   answer_id INT AUTO_INCREMENT PRIMARY KEY,
   answer_body TEXT NOT NULL,
@@ -37,10 +36,10 @@ CREATE TABLE IF NOT EXISTS answers(
   question_id INT NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
-  FOREIGN KEY (question_id) REFERENCES questions(question_id) ON DELETE CASCADE  -- FIXED: Added parentheses
+  FOREIGN KEY (question_id) REFERENCES questions(question_id) ON DELETE CASCADE  
 );
 
--- Comments table for answers
+-- 5. Comments table (for answers)
 CREATE TABLE IF NOT EXISTS comments(
   comment_id INT AUTO_INCREMENT PRIMARY KEY,
   comment_body TEXT NOT NULL,
@@ -50,32 +49,8 @@ CREATE TABLE IF NOT EXISTS comments(
   FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
   FOREIGN KEY (answer_id) REFERENCES answers(answer_id) ON DELETE CASCADE
 );
--- Answer votes table
-CREATE TABLE IF NOT EXISTS answer_votes (
-  vote_id INT AUTO_INCREMENT PRIMARY KEY,
-  userid INT NOT NULL,
-  answerid INT NOT NULL,
-  vote_type ENUM('upvote', 'downvote') NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  CONSTRAINT unique_user_answer_vote UNIQUE (userid, answerid),
-  FOREIGN KEY (userid) REFERENCES users(user_id) ON DELETE CASCADE,
-  FOREIGN KEY (answerid) REFERENCES answers(answer_id) ON DELETE CASCADE
-);
 
-CREATE TABLE IF NOT EXISTS likes (
-  like_id INT AUTO_INCREMENT PRIMARY KEY,
-  user_id INT NOT NULL,
-  target_id INT NOT NULL,
-  target_type ENUM('question','answer') NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-  CONSTRAINT unique_like UNIQUE (user_id, target_id, target_type),
-
-  FOREIGN KEY (user_id)
-    REFERENCES users(user_id)
-    ON DELETE CASCADE
-);
-
+-- 6. Notification table
 CREATE TABLE IF NOT EXISTS notifications (
   notification_id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL,        -- receiver

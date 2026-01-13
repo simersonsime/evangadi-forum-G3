@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
@@ -6,6 +5,7 @@ import api from "../../Api/axios";
 import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
 import CommentBox from "../../components/Comments/CommentSection";
+import "./Answer.css";
 
 const Answer = () => {
   const { question_id } = useParams();
@@ -95,7 +95,7 @@ const Answer = () => {
           <h5 className="text-center fw-bold mb-3">Answer The Top Question</h5>
 
           <div className="text-center mb-3">
-            <Link to="/home" className="text-decoration-none">
+            <Link to="/home" className="subText">
               Go to question page
             </Link>
           </div>
@@ -109,7 +109,7 @@ const Answer = () => {
               onChange={(e) => setAnswerText(e.target.value)}
             />
 
-            <div className="buttonRow  d-md-flex justify-content-md-center">
+            <div className="buttonRow  d-md-flex justify-content">
               <button className="btn btn-primary px-4" type="submit">
                 Post Your Answer
               </button>

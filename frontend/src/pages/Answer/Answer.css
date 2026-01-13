@@ -1,7 +1,7 @@
 /* =========================
    GLOBAL CONTAINER
-========================= */ */
-.answer {
+========================= */
+*/ .answer {
   margin: 0 auto;
   padding: 20px;
   max-width: 1100px;
@@ -109,6 +109,15 @@
   margin: 20px 0;
 }
 
+.subText {
+  display: block;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #46494e;
+  margin-bottom: 0.8rem;
+  text-decoration: none;
+}
+
 .answer__community {
   font-size: 20px;
   font-weight: 700;
@@ -179,4 +188,21 @@
   .answer__button button {
     width: 100%;
   }
+}
+
+
+.subText {
+  display: block;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #46494e;
+  margin-bottom: 0.8rem;
+  text-decoration: none;
+}
+
+.card h5 {
+  text-align: center;
+  font-size: 1.45rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
 }
