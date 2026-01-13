@@ -1,6 +1,6 @@
 .home {
   max-width: 980px;
-  height: 75vh;
+  min-height: 75vh;
   margin: 0 auto;
   padding: 2rem 1rem 4rem;
   display: flex;
@@ -21,6 +21,7 @@
   border-radius: 6px;
   font-size: 0.95rem;
   font-weight: 500;
+  margin-bottom: 0.95rem;
   cursor: pointer;
 }
 
@@ -59,8 +60,7 @@
 }
 
 .home__container hr {
-  border: none;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid #d1d5db;
 }
 /* ================= Question Row ================= */
 .home__questions {
@@ -88,6 +88,7 @@
 .home__user {
   font-size: 0.9rem;
   font-weight: 600;
+  margin-right: 2rem;
   color: #333;
 }
 

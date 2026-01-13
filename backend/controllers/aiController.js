@@ -56,10 +56,14 @@ export const assistQuestion = async (req, res) => {
     // 1 API call: improve + suggest tags
     const response = await openai.responses.create({
       model: "gpt-4o-mini",
-      input: `You are a professional editor and software design expert. 
-Correct all spelling, grammar, and punctuation errors in the title and description. 
-Improve clarity and readability without changing the meaning.
-Also, suggest 2–4 relevant tags for the question. Return tags as lowercase words only, without punctuation.
+      input: `You are a strict professional English  editor.
+
+      MANDATORY RULES (DO NOT IGNORE):
+      1. You MUST correct ALL spelling, grammar, punctuation, and capitalization errors.
+      2. You MUST rewrite the title and description if ANY error exists.
+      3. You MUST keep the original meaning, but you are REQUIRED to improve clarity.
+      4. You MUST NOT return the original text if it contains errors.
+      5. Output MUST be valid JSON only. No explanations. No extra text.
       
 Return a JSON object exactly like this format:
 {
