@@ -80,7 +80,7 @@ const Answer = () => {
             </div>
             <div className="w-100 ">
               <div className="bg-light rounded p-1 mt-1">
-                {item.answer_body || item.answer}
+                {item.answer_body || item.answer ||item.content}
               </div>
             </div>
           </div>
