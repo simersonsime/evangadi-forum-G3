@@ -11,8 +11,8 @@ CREATE TABLE users (
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
 
-    COLUMN reset_otp VARCHAR(6) NULL,
-    COLUMN reset_otp_expiry BIGINT NULL,
+    reset_otp VARCHAR(6) NULL,
+    reset_otp_expiry BIGINT NULL,
 
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
