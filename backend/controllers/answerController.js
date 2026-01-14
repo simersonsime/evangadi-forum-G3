@@ -1,6 +1,5 @@
 import db from "../config/database.js";
 import { StatusCodes } from "http-status-codes";
-import createNotification from "../utils/createNotification.js";
 
 /**
  * Post a new answer for a question
@@ -48,25 +47,12 @@ export const postAnswer = async (req, res) => {
       });
     }
 
-    const questionOwnerId = questionRows[0].user_id;
-
     const [result] = await db
       .promise()
       .query(
         "INSERT INTO answers (question_id, user_id, answer) VALUES (?, ?, ?)",
         [question_id, user_id, answer]
       );
-
-    if (questionOwnerId !== user_id) {
-      await createNotification({
-        user_id: questionOwnerId,
-        sender_id: user_id,
-        type: "answer",
-        target_id: question_id,
-        target_type: "question",
-        message: "Your question has a new answer!",
-      });
-    }
 
     res.status(201).json({
       message: "Answer posted successfully",
