@@ -28,10 +28,11 @@ const Home = () => {
     let isMounted = true;
     const fetchQuestions = async () => {
       try {
-        const res = await api.get("/question");
+        // ✅ FIXED: Correct API endpoint for fetching all questions
+        const res = await api.get("/question"); // must match backend route GET /api/question
         if (isMounted) setQuestions(res.data.questions || []);
       } catch (err) {
-        console.error(err);
+        console.error("Fetch questions error:", err);
         if (isMounted) setError("Failed to load questions.");
       } finally {
         if (isMounted) setLoading(false);
@@ -82,7 +83,7 @@ const Home = () => {
         </div>
 
         <div className="home__welcome">
-          <h6>Welcome: {user?.name || user?.username || "User"}</h6>
+          <h6>Welcome: {user?.name || user?.username}</h6>
         </div>
       </div>
 
@@ -105,24 +106,21 @@ const Home = () => {
           <p>No questions found.</p>
         ) : (
           currentQuestions.map((item) => (
-            <div key={item.post_id}>
+            <div key={item.question_id}>
+              {" "}
               <div
                 className="home__questions"
-                onClick={() => navigate(`/answer/${item.question_id}`)}
-              >
-                  <div>
-                  <FaUserCircle style={{ fontSize: "60px" }} />
-                  <div className="home__user mx-3">
+                onClick={() => navigate(`/answer/${item.question_id}`)}>
+                <div className="d-flex py-1 flex-column gap-1">
+                  <FaUserCircle style={{ fontSize: "45px" }} />
+                  <div className="home__user">
                     {item.username || item.first_name || `User ${item.user_id}`}
                   </div>
                   <span className="answerDate">
                     {formatDate(item.created_at)}
                   </span>
                 </div>
-
-                <div className="home__question">
-                  {item.title || item.question}
-                </div>
+                <div className="home__question">{item.title}</div>{" "}
                 <GrFormNext className="home__questionsArrow" />
               </div>
               <hr />

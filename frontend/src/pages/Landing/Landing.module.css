@@ -1,39 +1,58 @@
-body {
-  background-color: #f7f7f7;
-}
+/* Main wrapper fills page */
 .wrapper {
   display: flex;
   width: 100%;
+  min-height: 60vh;
 }
 
+/* Left side - Login/Signup */
 .authSection {
   flex: 1;
   background-color: #f7f7f7;
   display: flex;
-  top: 0;
   flex-direction: column;
   justify-content: start;
   align-items: end;
-  padding: 0.5rem;
+  padding: 20px;
 }
 
-/* RIGHT: ABOUT */
+/* Right side - About info */
 .aboutSection {
   flex: 1;
-  position: sticky;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
   justify-content: start;
   align-items: start;
+  padding: 20px;
+  background-color: #f7f7f7;
 }
 
-/* RESPONSIVE */
+/* ============ TABLET & MOBILE ============ */
 @media (max-width: 768px) {
+  /* Stack sections */
   .wrapper {
     flex-direction: column;
   }
 
+  /* Full width sections */
+  .authSection {
+    width: 100%;
+    min-height: 50vh;
+  }
+
   .aboutSection {
-    position: relative;
-    height: auto;
+    width: 100%;
+    min-height: 50vh;
+  }
+}
+
+/* ============ SMALL PHONES ============ */
+@media (max-width: 480px) {
+  .authSection {
+    padding: 15px;
+  }
+
+  .aboutSection {
+    padding: 15px;
   }
 }
