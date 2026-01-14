@@ -7,7 +7,11 @@ import { authenticateToken } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 router.post("/", authenticateToken, postComment);
-
 router.get("/:answerid", getComments);
+<<<<<<< HEAD
  
+=======
+router.delete("/:commentid", authenticateToken, deleteCommentById);
+
+>>>>>>> main
 export default router;
