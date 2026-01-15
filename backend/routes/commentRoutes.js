@@ -5,13 +5,7 @@ import { getComments } from "../controllers/commentController.js";
 import { authenticateToken } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
-
 router.post("/", authenticateToken, postComment);
 router.get("/:answerid", getComments);
-<<<<<<< HEAD
- 
-=======
-router.delete("/:commentid", authenticateToken, deleteCommentById);
-
->>>>>>> main
+// router.delete("/:commentid", authenticateToken, deleteCommentById);
 export default router;

@@ -5,6 +5,7 @@ import { FaUserCircle } from "react-icons/fa";
 import api from "../../Api/axios";
 import { useAuth } from "../../context/AuthContext";
 import { toast } from "react-toastify";
+import CommentBox from "../../components/Comments/CommentSection";
 
 const Answer = () => {
   const { question_id } = useParams();
@@ -186,6 +187,9 @@ const Answer = () => {
                       {new Date(ans.created_at).toLocaleString()}
                     </span>
                   )}
+                  <div className="comment-box-wrapper">
+                    <CommentBox answerid={ans.answer_id} />
+                  </div>
                 </div>
               )}
             </div>

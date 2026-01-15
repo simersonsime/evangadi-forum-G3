@@ -16,15 +16,8 @@ CREATE TABLE users (
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-<<<<<<< HEAD
-
     reset_otp VARCHAR(6) NULL,
     reset_otp_expiry BIGINT NULL,
-
-=======
-    reset_otp VARCHAR(6) NULL,
-    reset_otp_expiry BIGINT NULL,
->>>>>>> main
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
