@@ -7,7 +7,7 @@ import Home from "./pages/Home/Home";
 import Landing from "./pages/Landing/Landing";
 import AskQuestion from "./pages/AskQuestion/AskQuestion";
 import Answer from "./pages/Answer/Answer";
-import NotFound from "./Pages/NotFound/NotFound";
+import NotFound from "./pages/NotFound/NotFound";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/ForgotPassword/ResetPassword";
 import HowItWorks from "./pages/HowItWorks/HowItWorks";
