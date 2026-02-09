@@ -5,23 +5,23 @@ dotenv.config();
 const database = mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.MYSQL_DB,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME, // your database (defaultdb)
   port: Number(process.env.DB_PORT),
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
+  ssl: { rejectUnauthorized: false }, // required for Aiven SSL
+  multipleStatements: true, // allow running multiple SQL commands at once
 });
 
-// Test the database connection
 database.getConnection((err, connection) => {
   if (err) {
-    console.error("MySQL connection error FULL:", err);
+    console.error("MySQL connection error:", err);
     return;
-  } else {
-    console.log("MySQL connected to evangadi_forum database");
-    connection.release();
   }
+  console.log(`MySQL connected to ${process.env.DB_NAME} ✅`);
+  connection.release();
 });
 
 export default database;
