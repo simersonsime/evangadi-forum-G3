@@ -10,7 +10,7 @@ import Answer from "./pages/Answer/Answer";
 import NotFound from "./pages/NotFound/NotFound";
 import ForgotPassword from "./components/ForgotPassword/ForgotPassword";
 import ResetPassword from "./components/ForgotPassword/ResetPassword";
-import HowItWorks from "./pages/HowItWorks/HowItWorks";
+import HowItWorks from "./pages/Howitworks/Howitworks";
 import EditQuestion from "./pages/EditQuestion/EditQuestion";
 import TermsAndConditions from "./pages/TermsAndConditions/TermsAndConditions";
 
